@@ -8,6 +8,8 @@ import Layout from '../components/layout';
 // import Image from '../components/image';
 import SEO from '../components/seo';
 
+import 'react-calendar/dist/Calendar.css';
+
 const options = [
   {value: 'chocolate', label: 'Chocolate'},
   {value: 'strawberry', label: 'Strawberry'},
@@ -19,23 +21,30 @@ const paperOptions = [
   {value: 'a4', label: 'A4'},
 ]
 
+const computeMonthRows = (dtObj) => {
+  const yr = dtObj.year;
+  const mon = dtObj.month;
+  const dt = DateTime.fromObject({year: yr, month: mon});
+
+  const monthRows = [];
+  for (let dy = 1; dy <= dt.daysInMonth; dy++) {
+    const dayStr = DateTime.fromObject({year: yr, month: mon, day: dy}).toFormat('ccc dd');
+    monthRows.push(dayStr);
+  }
+
+  console.log(monthRows);
+  return monthRows;
+}
+
 class IndexPage extends React.Component {
   constructor(props) {
     super(props);
 
     const localDt = DateTime.local();
-    const currentDate = localDt.toObject();
-    const endDate = localDt.plus({months: 3}).toObject();
 
     this.state = {
-      startMonth: {
-        year: currentDate.year,
-        month: currentDate.month,
-      },
-      endMonth: {
-        year: endDate.year,
-        month: endDate.month,
-      },
+      startDate: localDt.toObject(),
+      endDate: localDt.plus({months: 3}).toObject(),
       paperType: paperOptions[0],
       habits: [
         {
@@ -53,22 +62,40 @@ class IndexPage extends React.Component {
       ],
     };
 
+    this.handleStartDate = this.handleStartDate.bind(this);
+    this.handleEndDate = this.handleEndDate.bind(this);
+    this.handlePaperType = this.handlePaperType.bind(this);
     console.log('init complete!', this.state);
   }
 
-  handleStartDate(evt) {
-    console.log('handleStartDate()', evt);
+  handleStartDate(uiDate) {
+    const newDate = DateTime.fromJSDate(uiDate);
+    this.setState({
+      startDate: newDate.toObject()
+    });
+
+    computeMonthRows(newDate.toObject());
   }
 
-  handleEndDate(evt) {
-    console.log('handleEndDate()', evt);
+  handleEndDate(uiDate) {
+    const newDate = DateTime.fromJSDate(uiDate);
+    this.setState({
+      endDate: newDate.toObject()
+    });
+
+    computeMonthRows(newDate.toObject());
   }
 
-  handlePaperType(evt) {
-    console.log('handlePaperType()', evt);
+  handlePaperType(uiPaperType) {
+    this.setState({
+      paperType: uiPaperType
+    });
   }
 
   render() {
+    const displayStartDate = DateTime.fromObject(this.state.startDate).toJSDate();
+    const displayEndDate = DateTime.fromObject(this.state.endDate).toJSDate();
+
     return (
       <Layout>
         <SEO title="Home" />
@@ -80,6 +107,7 @@ class IndexPage extends React.Component {
           <Calendar
             className="rt-control rt-control--calendar"
             onChange={this.handleStartDate}
+            value={displayStartDate}
             maxDetail="year"
             minDetail="year"
             defaultView="year"
@@ -90,6 +118,7 @@ class IndexPage extends React.Component {
           <Calendar
             className="rt-control rt-control--calendar"
             onChange={this.handleEndDate}
+            value={displayEndDate}
             maxDetail="year"
             minDetail="year"
             defaultView="year"
