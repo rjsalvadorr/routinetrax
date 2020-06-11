@@ -11,24 +11,24 @@ import SEO from '../components/seo';
 import 'react-calendar/dist/Calendar.css';
 
 const options = [
-  {value: 'chocolate', label: 'Chocolate'},
-  {value: 'strawberry', label: 'Strawberry'},
-  {value: 'vanilla', label: 'Vanilla'},
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
 ];
 
 const paperOptions = [
-  {value: 'letter', label: 'Letter'},
-  {value: 'a4', label: 'A4'},
+  { value: 'letter', label: 'Letter' },
+  { value: 'a4', label: 'A4' },
 ]
 
 const computeMonthRows = (dtObj) => {
   const yr = dtObj.year;
   const mon = dtObj.month;
-  const dt = DateTime.fromObject({year: yr, month: mon});
+  const dt = DateTime.fromObject({ year: yr, month: mon });
 
   const monthRows = [];
   for (let dy = 1; dy <= dt.daysInMonth; dy++) {
-    const dayStr = DateTime.fromObject({year: yr, month: mon, day: dy}).toFormat('ccc dd');
+    const dayStr = DateTime.fromObject({ year: yr, month: mon, day: dy }).toFormat('ccc dd');
     monthRows.push(dayStr);
   }
 
@@ -44,7 +44,7 @@ class IndexPage extends React.Component {
 
     this.state = {
       startDate: localDt.toObject(),
-      endDate: localDt.plus({months: 3}).toObject(),
+      endDate: localDt.plus({ months: 3 }).toObject(),
       paperType: paperOptions[0],
       habits: [
         {
@@ -60,6 +60,7 @@ class IndexPage extends React.Component {
           description: 'Separate peaches from dogs',
         },
       ],
+      tables: [],
     };
 
     this.handleStartDate = this.handleStartDate.bind(this);
@@ -71,19 +72,17 @@ class IndexPage extends React.Component {
   handleStartDate(uiDate) {
     const newDate = DateTime.fromJSDate(uiDate);
     this.setState({
-      startDate: newDate.toObject()
+      startDate: newDate.toObject(),
+      tables: [computeMonthRows(newDate.toObject())]
     });
-
-    computeMonthRows(newDate.toObject());
   }
 
   handleEndDate(uiDate) {
     const newDate = DateTime.fromJSDate(uiDate);
     this.setState({
-      endDate: newDate.toObject()
+      endDate: newDate.toObject(),
+      tables: [computeMonthRows(newDate.toObject())]
     });
-
-    computeMonthRows(newDate.toObject());
   }
 
   handlePaperType(uiPaperType) {
@@ -95,6 +94,23 @@ class IndexPage extends React.Component {
   render() {
     const displayStartDate = DateTime.fromObject(this.state.startDate).toJSDate();
     const displayEndDate = DateTime.fromObject(this.state.endDate).toJSDate();
+
+    const tableData = this.state.tables;
+    let tableRows = null;
+    if (tableData.length != 0) {
+      tableRows = tableData[0].map((row) => {
+        return (
+          <tr>
+            <td>{row}</td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+          </tr>
+        )
+      });
+    }
 
     return (
       <Layout>
@@ -144,11 +160,28 @@ class IndexPage extends React.Component {
         </div>
         <div className="control-group">
           <span className="label">Icon</span>
-          <Select className="rt-control rt-control--select" options={options}/>
+          <Select className="rt-control rt-control--select" options={options} />
         </div>
         <div className="control-group">
           <span className="label">Habit</span>
           <input className="rt-control rt-control--text" type="text" id="habit-1" name="habit-1" required maxLength="20" />
+        </div>
+        <div className="rt-table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>day</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows}
+            </tbody>
+          </table>
         </div>
       </Layout>
     );
