@@ -3,6 +3,9 @@ import React from 'react';
 import Select from 'react-select';
 import Calendar from 'react-calendar';
 import { DateTime } from 'luxon';
+import { Page, View, Document } from '@react-pdf/renderer';
+import ReactPDF from '@react-pdf/renderer';
+import html2canvas from 'html2canvas';
 
 import Layout from '../components/layout';
 // import Image from '../components/image';
@@ -80,7 +83,7 @@ const renderTable = (tableData) => {
     const mon = tableData.month;
     const tableName = `${mon} ${yr}`;
     return (
-        <div className="rt-table-wrapper" key={tableName}>
+        <div className={`rt-table-wrapper rt-table-wrapper--${mon.toLowerCase()}-${yr}`} key={tableName}>
             <h2>{tableName}</h2>
             <table>
                 <thead>
@@ -131,6 +134,8 @@ class IndexPage extends React.Component {
         this.handleStartDate = this.handleStartDate.bind(this);
         this.handleEndDate = this.handleEndDate.bind(this);
         this.handlePaperType = this.handlePaperType.bind(this);
+        this.buildDocument = this.buildDocument.bind(this);
+        this.getDocument = this.getDocument.bind(this);
         console.log('init complete!', this.state);
     }
 
@@ -156,10 +161,42 @@ class IndexPage extends React.Component {
         });
     }
 
-    render() {
-        // const displayStartDate = DateTime.fromObject(this.state.startDate).toJSDate();
-        // const displayEndDate = DateTime.fromObject(this.state.endDate).toJSDate();
+    buildDocument() {
+        console.log('buildDocument() STUB');
+        // const tableData = this.state.tables;
+        // let tables = [];
+        // if (tableData.length != 0) {
+        //   tables = tableData.map((tbl) => {
+        //     return renderTable(tbl)
+        //   });
+        // }
 
+        // return (
+        //   <Document>
+        //     <Page size="letter">
+        //       <View>
+        //         {tables}
+        //       </View>
+        //     </Page>
+        //   </Document>
+        // );
+        return null;
+    }
+
+    getDocument() {
+        const tableTarget = document.querySelector('.rt-table-wrapper--june-2020');
+        // rendering a DOM target as a canvas, which gets turned to an image
+        html2canvas(tableTarget).then(function(canvas) {
+            // document.body.appendChild(canvas);
+            const tableImg = canvas.toDataURL('image/png');
+            console.log(tableImg);
+        });
+        // const doc = this.buildDocument();
+        // ReactPDF.render(doc, `${__dirname}/routinetrax.pdf`);
+        // render(doc, `${__dirname}/routinetrax.pdf`);
+    }
+
+    render() {
         const tableData = this.state.tables;
         let tables = [];
         if (tableData.length != 0) {
@@ -173,29 +210,6 @@ class IndexPage extends React.Component {
                 <SEO title="Home" />
                 <h1>routinetrax</h1>
                 <p>Paper-based habits tracking, supercharged</p>
-
-                {/* <div className="control-group">
-          <span className="label">Starting month</span>
-          <Calendar
-            className="rt-control rt-control--calendar"
-            onChange={this.handleStartDate}
-            value={displayStartDate}
-            maxDetail="year"
-            minDetail="year"
-            defaultView="year"
-          />
-        </div>
-        <div className="control-group">
-          <span className="label">Ending month</span>
-          <Calendar
-            className="rt-control rt-control--calendar"
-            onChange={this.handleEndDate}
-            value={displayEndDate}
-            maxDetail="year"
-            minDetail="year"
-            defaultView="year"
-          />
-        </div> */}
 
                 <div className="control-group">
                     <span className="label">Paper type</span>
@@ -224,7 +238,10 @@ class IndexPage extends React.Component {
                     <input className="rt-control rt-control--text" type="text" id="habit-1" name="habit-1" required maxLength="20" />
                 </div>
 
+                <button className="rt-button rt-button--sheets" onClick={this.getDocument}>Get routinetrax sheets</button>
+
                 {tables}
+                {/* {this.buildDocument()} */}
             </Layout>
         );
     }
