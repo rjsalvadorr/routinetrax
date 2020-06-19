@@ -1,17 +1,12 @@
 import React from 'react';
-// import {Link} from 'gatsby';
 import Select from 'react-select';
-import Calendar from 'react-calendar';
 import { DateTime } from 'luxon';
-import { Page, View, Document } from '@react-pdf/renderer';
-import ReactPDF from '@react-pdf/renderer';
 import html2canvas from 'html2canvas';
 
 import Layout from '../components/layout';
-// import Image from '../components/image';
 import SEO from '../components/seo';
-
-import 'react-calendar/dist/Calendar.css';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -134,8 +129,7 @@ class IndexPage extends React.Component {
         this.handleStartDate = this.handleStartDate.bind(this);
         this.handleEndDate = this.handleEndDate.bind(this);
         this.handlePaperType = this.handlePaperType.bind(this);
-        this.buildDocument = this.buildDocument.bind(this);
-        this.getDocument = this.getDocument.bind(this);
+        this.getPdfDocument = this.getPdfDocument.bind(this);
         console.log('init complete!', this.state);
     }
 
@@ -161,48 +155,37 @@ class IndexPage extends React.Component {
         });
     }
 
-    buildDocument() {
-        console.log('buildDocument() STUB');
-        // const tableData = this.state.tables;
-        // let tables = [];
-        // if (tableData.length != 0) {
-        //   tables = tableData.map((tbl) => {
-        //     return renderTable(tbl)
-        //   });
-        // }
-
-        // return (
-        //   <Document>
-        //     <Page size="letter">
-        //       <View>
-        //         {tables}
-        //       </View>
-        //     </Page>
-        //   </Document>
-        // );
-        return null;
-    }
-
-    getDocument() {
+    getPdfDocument() {
         const tableTarget = document.querySelector('.rt-table-wrapper--june-2020');
         // rendering a DOM target as a canvas, which gets turned to an image
-        html2canvas(tableTarget).then(function(canvas) {
-            // document.body.appendChild(canvas);
+        html2canvas(tableTarget).then((canvas) => {
             const tableImg = canvas.toDataURL('image/png');
             console.log(tableImg);
+
+            const pdfDoc = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'letter',
+            });
+
+            pdfDoc.autoTable({
+                head: [['Name', 'Email', 'Country']],
+                body: [
+                    ['David', 'david@example.com', 'Sweden'],
+                    ['Rico', 'rico@example.com', 'Spain'],
+                ],
+            })
+            pdfDoc.save("routinetrax.pdf");
         });
-        // const doc = this.buildDocument();
-        // ReactPDF.render(doc, `${__dirname}/routinetrax.pdf`);
-        // render(doc, `${__dirname}/routinetrax.pdf`);
     }
 
     render() {
         const tableData = this.state.tables;
         let tables = [];
         if (tableData.length != 0) {
-          tables = tableData.map((tbl) => {
-            return renderTable(tbl)
-          });
+            tables = tableData.map((tbl) => {
+                return renderTable(tbl)
+            });
         }
 
         return (
@@ -238,10 +221,9 @@ class IndexPage extends React.Component {
                     <input className="rt-control rt-control--text" type="text" id="habit-1" name="habit-1" required maxLength="20" />
                 </div>
 
-                <button className="rt-button rt-button--sheets" onClick={this.getDocument}>Get routinetrax sheets</button>
+                <button className="rt-button rt-button--sheets" onClick={this.getPdfDocument}>Get routinetrax sheets</button>
 
                 {tables}
-                {/* {this.buildDocument()} */}
             </Layout>
         );
     }
