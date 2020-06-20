@@ -116,31 +116,45 @@ class IndexPage extends React.Component {
 
     getPdfDocument(tables) {
         console.log('getPdfDocument()', this.state.tables);
-        const currentMonthTable = this.state.tables[0];
-        const currentMonthRows = currentMonthTable.rows.map(row => {
-            return [row, '', '', '', '', '', '', '', '', ''];
-        });
-
+    
         const pdfDoc = new jsPDF({
             orientation: 'p',
             unit: 'mm',
             format: 'letter',
         });
-        pdfDoc.setFontSize(TITLE_FONT_SIZE)
-        pdfDoc.text(`${currentMonthTable.month} ${currentMonthTable.year}`, TITLE_START_X, TITLE_START_Y);
-        pdfDoc.autoTable({
-            head: [['Day', '', '', '', '', '', '', '', '', '']],
-            body: currentMonthRows,
-            startY: TABLE_START_Y,
-            didDrawCell: function(data) {
-                console.log('didDrawCell()', data);
-                if (data.section === 'head' && data.column.dataKey !== 0) {
-                    pdfDoc.addImage(testImg, 'PNG', data.cell.x, data.cell.y, ICON_SIZE, ICON_SIZE);
-                }
-            }
-        })
 
-        const filename = `routinetrax-${currentMonthTable.month.toLowerCase()}-${currentMonthTable.year}.pdf`;
+        pdfDoc.setFontSize(TITLE_FONT_SIZE)
+
+        for (let i = 0; i < this.state.tables.length; i++) {
+            const currentMonthTable = this.state.tables[i];
+            const currentMonthRows = currentMonthTable.rows.map(row => {
+                return [row, '', '', '', '', '', '', '', '', ''];
+            });
+    
+            pdfDoc.text(`${currentMonthTable.month} ${currentMonthTable.year}`, TITLE_START_X, TITLE_START_Y);
+            pdfDoc.autoTable({
+                head: [['Day', '', '', '', '', '', '', '', '', '']],
+                body: currentMonthRows,
+                theme: 'grid',
+                columnStyles: {
+                    0: { halign: 'right' }
+                },
+                startY: TABLE_START_Y,
+                didDrawCell: function(data) {
+                    console.log('didDrawCell()', data);
+                    if (data.section === 'head' && data.column.dataKey !== 0) {
+                        pdfDoc.addImage(testImg, 'PNG', data.cell.x, data.cell.y, ICON_SIZE, ICON_SIZE);
+                    }
+                }
+            })
+
+            if (i < this.state.tables.length - 1) {
+                pdfDoc.addPage('letter', 'p');
+            }
+        }
+
+
+        const filename = `routinetrax-${Date.now()}.pdf`;
         pdfDoc.save(filename);
     }
 
