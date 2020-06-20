@@ -8,6 +8,9 @@ import SEO from '../components/seo';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
+import testImg from '../icons/food/icon-bacon.png';
+const ICON_SIZE = 6;
+
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -173,7 +176,17 @@ class IndexPage extends React.Component {
                 body: [
                     ['David', 'david@example.com', 'Sweden'],
                     ['Rico', 'rico@example.com', 'Spain'],
+                    ['David', 'david@example.com', 'Sweden'],
+                    ['Rico', 'rico@example.com', 'Spain'],
+                    ['David', 'david@example.com', 'Sweden'],
+                    ['Rico', 'rico@example.com', 'Spain'],
+                    ['David', 'david@example.com', 'Sweden'],
+                    ['Rico', 'rico@example.com', 'Spain'],
                 ],
+                didDrawCell: function(data) {
+                    console.log('cellData', data);
+                    pdfDoc.addImage(testImg, 'PNG', data.cell.x, data.cell.y, ICON_SIZE, ICON_SIZE);
+                }
             })
             pdfDoc.save("routinetrax.pdf");
         });
@@ -182,7 +195,7 @@ class IndexPage extends React.Component {
     render() {
         const tableData = this.state.tables;
         let tables = [];
-        if (tableData.length != 0) {
+        if (tableData.length !== 0) {
             tables = tableData.map((tbl) => {
                 return renderTable(tbl)
             });
