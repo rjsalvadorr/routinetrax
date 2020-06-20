@@ -1,15 +1,17 @@
 import React from 'react';
 import Select from 'react-select';
 import { DateTime } from 'luxon';
-import html2canvas from 'html2canvas';
-
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
 import testImg from '../icons/food/icon-bacon.png';
+
 const ICON_SIZE = 6;
+const TABLE_START_Y = 22;
+const TITLE_FONT_SIZE = 24;
+const TITLE_START_X = 14;
+const TITLE_START_Y = 16;
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -32,8 +34,6 @@ const computeMonthRows = (dtObj) => {
         const dayStr = DateTime.fromObject({ year: yr, month: mon, day: dy }).toFormat('ccc dd');
         monthRows.push(dayStr);
     }
-
-    console.log(monthRows);
     return monthRows;
 }
 
@@ -55,51 +55,7 @@ const computeTables = (startMonthObj) => {
             rows: computeMonthRows(currentDt)
         });
     }
-
-    console.log(tables);
     return tables;
-}
-
-const renderTableRows = (tableRows, yr, mon) => {
-    return tableRows.map((row) => {
-        return (
-            <tr key={`${yr} ${mon} ${row}`}>
-                <td>{row}</td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-            </tr>
-        )
-    });
-}
-
-const renderTable = (tableData) => {
-    const tableRows = tableData.rows;
-    const yr = tableData.year;
-    const mon = tableData.month;
-    const tableName = `${mon} ${yr}`;
-    return (
-        <div className={`rt-table-wrapper rt-table-wrapper--${mon.toLowerCase()}-${yr}`} key={tableName}>
-            <h2>{tableName}</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>day</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {renderTableRows(tableRows, yr, mon)}
-                </tbody>
-            </table>
-        </div>
-    )
 }
 
 class IndexPage extends React.Component {
@@ -158,49 +114,37 @@ class IndexPage extends React.Component {
         });
     }
 
-    getPdfDocument() {
-        const tableTarget = document.querySelector('.rt-table-wrapper--june-2020');
-        // rendering a DOM target as a canvas, which gets turned to an image
-        html2canvas(tableTarget).then((canvas) => {
-            const tableImg = canvas.toDataURL('image/png');
-            console.log(tableImg);
+    getPdfDocument(tables) {
+        console.log('getPdfDocument()', this.state.tables);
+        const currentMonthTable = this.state.tables[0];
+        const currentMonthRows = currentMonthTable.rows.map(row => {
+            return [row, '', '', '', '', '', '', '', '', ''];
+        });
 
-            const pdfDoc = new jsPDF({
-                orientation: 'p',
-                unit: 'mm',
-                format: 'letter',
-            });
-
-            pdfDoc.autoTable({
-                head: [['Name', 'Email', 'Country']],
-                body: [
-                    ['David', 'david@example.com', 'Sweden'],
-                    ['Rico', 'rico@example.com', 'Spain'],
-                    ['David', 'david@example.com', 'Sweden'],
-                    ['Rico', 'rico@example.com', 'Spain'],
-                    ['David', 'david@example.com', 'Sweden'],
-                    ['Rico', 'rico@example.com', 'Spain'],
-                    ['David', 'david@example.com', 'Sweden'],
-                    ['Rico', 'rico@example.com', 'Spain'],
-                ],
-                didDrawCell: function(data) {
-                    console.log('cellData', data);
+        const pdfDoc = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'letter',
+        });
+        pdfDoc.setFontSize(TITLE_FONT_SIZE)
+        pdfDoc.text(`${currentMonthTable.month} ${currentMonthTable.year}`, TITLE_START_X, TITLE_START_Y);
+        pdfDoc.autoTable({
+            head: [['Day', '', '', '', '', '', '', '', '', '']],
+            body: currentMonthRows,
+            startY: TABLE_START_Y,
+            didDrawCell: function(data) {
+                console.log('didDrawCell()', data);
+                if (data.section === 'head' && data.column.dataKey !== 0) {
                     pdfDoc.addImage(testImg, 'PNG', data.cell.x, data.cell.y, ICON_SIZE, ICON_SIZE);
                 }
-            })
-            pdfDoc.save("routinetrax.pdf");
-        });
+            }
+        })
+
+        const filename = `routinetrax-${currentMonthTable.month.toLowerCase()}-${currentMonthTable.year}.pdf`;
+        pdfDoc.save(filename);
     }
 
     render() {
-        const tableData = this.state.tables;
-        let tables = [];
-        if (tableData.length !== 0) {
-            tables = tableData.map((tbl) => {
-                return renderTable(tbl)
-            });
-        }
-
         return (
             <Layout>
                 <SEO title="Home" />
@@ -235,8 +179,6 @@ class IndexPage extends React.Component {
                 </div>
 
                 <button className="rt-button rt-button--sheets" onClick={this.getPdfDocument}>Get routinetrax sheets</button>
-
-                {tables}
             </Layout>
         );
     }
