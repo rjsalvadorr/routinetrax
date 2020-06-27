@@ -1,120 +1,124 @@
 import React from 'react';
-import Select from 'react-select';
-import { DateTime } from 'luxon';
+import {DateTime} from 'luxon';
 
+import {computeMonthRows, computeTables} from '../utils/time-calcs';
+import {generatePdf} from '../utils/pdf-utils';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import { computeMonthRows, computeTables } from '../utils/time-calcs';
-import { generatePdf } from '../utils/pdf-utils';
-
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
-const paperOptions = [
-    { value: 'letter', label: 'Letter' },
-    { value: 'a4', label: 'A4' },
-]
+import SelectControl from '../components/select-control';
+import MonthDrawers from '../components/month-drawers';
+import {
+  paperOptions,
+  monthOptions,
+  DEFAULT_MONTHS,
+} from '../data/setup-values';
 
 class IndexPage extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor (props) {
+    super (props);
 
-        const localDt = DateTime.local();
+    const localDt = DateTime.local ();
+    const computedTables = computeTables (localDt.toObject ());
 
-        this.state = {
-            startDate: localDt.toObject(),
-            endDate: localDt.plus({ months: 3 }).toObject(),
-            paperType: paperOptions[0],
-            habits: [
-                {
-                    icon: 'thing-1',
-                    description: 'Resemble intellectual figs',
-                },
-                {
-                    icon: 'thing-2',
-                    description: 'Name a humorous peach',
-                },
-                {
-                    icon: 'thing-3',
-                    description: 'Separate peaches from dogs',
-                },
-            ],
-            tables: computeTables(localDt.toObject()),
-        };
+    this.state = {
+      startDate: localDt.toObject (),
+      // INVESTIGATE: is endDate even used?
+      endDate: localDt.plus ({months: DEFAULT_MONTHS}).toObject (),
+      paperType: paperOptions[0],
+      months: DEFAULT_MONTHS,
+      habits: [
+        {
+          icon: 'thing-1',
+          description: 'Resemble intellectual figs',
+        },
+        {
+          icon: 'thing-2',
+          description: 'Name a humorous peach',
+        },
+        {
+          icon: 'thing-3',
+          description: 'Separate peaches from dogs',
+        },
+      ],
+      tables: computedTables,
+      openTable: computedTables[0],
+    };
 
-        this.handleStartDate = this.handleStartDate.bind(this);
-        this.handleEndDate = this.handleEndDate.bind(this);
-        this.handlePaperType = this.handlePaperType.bind(this);
-        this.getPdfDocument = this.getPdfDocument.bind(this);
-    }
+    this.handleStartDate = this.handleStartDate.bind (this);
+    this.handleEndDate = this.handleEndDate.bind (this);
+    this.handlePaperType = this.handlePaperType.bind (this);
+    this.handleMonths = this.handleMonths.bind (this);
+    this.getPdfDocument = this.getPdfDocument.bind (this);
+    this.handleDrawerOpen = this.handleDrawerOpen.bind (this);
+  }
 
-    handleStartDate(uiDate) {
-        const newDate = DateTime.fromJSDate(uiDate);
-        this.setState({
-            startDate: newDate.toObject(),
-            tables: [computeMonthRows(newDate.toObject())]
-        });
-    }
+  handleStartDate (uiDate) {
+    const newDate = DateTime.fromJSDate (uiDate);
+    this.setState ({
+      startDate: newDate.toObject (),
+      tables: [computeMonthRows (newDate.toObject ())],
+    });
+  }
 
-    handleEndDate(uiDate) {
-        const newDate = DateTime.fromJSDate(uiDate);
-        this.setState({
-            endDate: newDate.toObject(),
-            tables: [computeMonthRows(newDate.toObject())]
-        });
-    }
+  handleEndDate (uiDate) {
+    const newDate = DateTime.fromJSDate (uiDate);
+    this.setState ({
+      endDate: newDate.toObject (),
+      tables: [computeMonthRows (newDate.toObject ())],
+    });
+  }
 
-    handlePaperType(uiPaperType) {
-        this.setState({
-            paperType: uiPaperType
-        });
-    }
+  handlePaperType (uiPaperType) {
+    this.setState ({
+      paperType: uiPaperType,
+    });
+  }
 
-    getPdfDocument() {
-        generatePdf(this.state.tables);
-    }
+  handleMonths (uiMonths) {
+    this.setState ({
+      months: uiMonths,
+    });
+  }
 
-    render() {
-        return (
-            <Layout>
-                <SEO title="Home" />
-                <h1>routinetrax</h1>
-                <p>Paper-based habits tracking, supercharged</p>
+  handleDrawerOpen (month, clickEvt) {
+    this.setState({
+      openTable: month,
+    })
+  }
 
-                <div className="control-group">
-                    <span className="label">Paper type</span>
-                    <Select
-                        className="rt-control rt-control--select"
-                        value={this.state.paperType}
-                        options={paperOptions}
-                        onChange={this.handlePaperType}
-                    />
-                </div>
-                <div className="control-group">
-                    <span className="label">Title</span>
-                    <input className="rt-control rt-control--text"
-                        type="text"
-                        id="title"
-                        name="title"
-                        required maxLength="20"
-                    />
-                </div>
-                <div className="control-group">
-                    <span className="label">Icon</span>
-                    <Select className="rt-control rt-control--select" options={options} />
-                </div>
-                <div className="control-group">
-                    <span className="label">Habit</span>
-                    <input className="rt-control rt-control--text" type="text" id="habit-1" name="habit-1" required maxLength="20" />
-                </div>
+  getPdfDocument () {
+    generatePdf (this.state.tables);
+  }
 
-                <button className="rt-button rt-button--sheets" onClick={this.getPdfDocument}>Get routinetrax sheets</button>
-            </Layout>
-        );
-    }
+  render () {
+    return (
+      <Layout>
+        <SEO title="Home" />
+
+        <SelectControl
+            label="Months"
+            selectedValue={this.state.months}
+            values={monthOptions}
+            onChange={this.handleMonths}
+        />
+        <SelectControl
+            label="Paper"
+            selectedValue={this.state.paperType}
+            values={paperOptions}
+            onChange={this.handlePaperType}
+        />
+
+        <MonthDrawers months={this.state.tables} openMonth={this.state.openTable} openHandler={this.handleDrawerOpen}/>
+
+        <button
+          className="rt-button rt-button--sheets"
+          onClick={this.getPdfDocument}
+        >
+          Get routinetrax sheets
+        </button>
+      </Layout>
+    );
+  }
 }
 
 export default IndexPage;

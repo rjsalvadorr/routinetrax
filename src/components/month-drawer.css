@@ -1,0 +1,41 @@
+.month-drawer {
+  color: #dddddd;
+  background-color: #333333;
+  border-top: 2px solid #222222;
+  border-right: 1px solid #222222;
+  border-bottom: 2px solid #222222;
+  border-left: 1px solid #222222;
+}
+
+.month-drawer__header {
+  position: relative;
+  padding: 0.25em;
+  font-size: 1.25em;
+  color: #111111;
+  background-color: #888888;
+  padding-left: 3em;
+}
+
+.month-drawer__header .toggle-button {
+  position: absolute;
+  left: 0.6em;
+  display: block;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 0.6em;
+  text-align: center;
+  background-color: #DDDDDD;
+  border: 1px solid #222222;
+}
+
+.month-drawer__header .toggle-button--open {
+  background-color: #666666;
+}
+
+.month-drawer--closed .month-drawer__content{
+  display: none;
+}
+
+.month-drawer__content {
+  padding: 0.25em;
+}

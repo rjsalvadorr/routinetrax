@@ -22,6 +22,7 @@ const computeTables = (startMonthObj) => {
   tables.push({
       year: start.year,
       month: start.monthLong,
+      label: `${start.monthLong} ${start.year}`,
       rows: computeMonthRows(start)
   });
   for (let offset = 1; offset < NUM_TABLES; offset++) {
@@ -29,6 +30,7 @@ const computeTables = (startMonthObj) => {
       tables.push({
           year: currentDt.year,
           month: currentDt.monthLong,
+          label: `${currentDt.monthLong} ${currentDt.year}`,
           rows: computeMonthRows(currentDt)
       });
   }
