@@ -1,15 +1,12 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { NUM_TABLES } from '../utils/time-calcs';
-import testImg from '../icons/food/icon-bacon.png';
-
-const NUM_PAIRS = NUM_TABLES / 2;
 
 const ICON_SIZE = 5;
-const TABLE_START_Y = 22;
-const TITLE_FONT_SIZE = 24;
 const TITLE_START_X = 14;
 const TITLE_START_Y = 16;
+const TABLE_START_Y = 22;
+
+const TITLE_FONT_SIZE = 28;
 const TABLE_MARGIN = 115;
 
 const generatePdf = tables => {
@@ -18,30 +15,45 @@ const generatePdf = tables => {
     unit: 'mm',
     format: 'letter',
   });
-  pdfDoc.setFontSize (TITLE_FONT_SIZE);
 
-  for (let i = 0; i < NUM_PAIRS; i++) {
+  for (let i = 0; i < tables.length; i++) {
     const pageNumber = pdfDoc.internal.getNumberOfPages ();
-    const leftIdx = i * 2;
-    const rightIdx = leftIdx + 1;
     const sp = '  ';
-
-    const leftTable = tables[leftIdx];
-    const leftRows = leftTable.rows.map (row => {
-      return [row, sp, sp, sp, sp, sp, sp, sp, sp, sp];
+    const currentTable = tables[i];
+    const habitRows = currentTable.habits.map (hab => {
+      return [sp, hab.description];
     });
-    const rightTable = tables[rightIdx];
-    const rightRows = rightTable.rows.map (row => {
+    const tableRows = currentTable.rows.map (row => {
       return [row, sp, sp, sp, sp, sp, sp, sp, sp, sp];
     });
 
-    const drawCellHook = function (data) {
+    const habitsTableHook = function (data) {
+      if (data.column.dataKey === 0) {
+        const imgX = data.cell.x + 1.5;
+        const imgY = data.cell.y + 1.5;
+
+        if (currentTable.habits[data.row.index]) {
+          const staticImg = document.createElement ('img');
+          staticImg.src = currentTable.habits[data.row.index].icon;
+          pdfDoc.addImage (staticImg, 'PNG', imgX, imgY, ICON_SIZE, ICON_SIZE);
+        }
+      }
+    };
+
+    const trackingTableHook = function (data) {
       if (data.section === 'head' && data.column.dataKey !== 0) {
         const imgX = data.cell.x + 1.5;
         const imgY = data.cell.y + 1.5;
-        pdfDoc.addImage (testImg, 'PNG', imgX, imgY, ICON_SIZE, ICON_SIZE);
+
+        const offsetIdx = data.column.index - 1;
+        if (currentTable.habits[offsetIdx]) {
+          const staticImg = document.createElement ('img');
+          staticImg.src = currentTable.habits[offsetIdx].icon;
+          pdfDoc.addImage (staticImg, 'PNG', imgX, imgY, ICON_SIZE, ICON_SIZE);
+        }
       }
     };
+
     const headStyle = {
       halign: 'center',
       textColor: '#000000',
@@ -56,41 +68,35 @@ const generatePdf = tables => {
       },
     };
 
+    pdfDoc.setFontSize (TITLE_FONT_SIZE);
     pdfDoc.text (
-      `${leftTable.month} ${leftTable.year}`,
+      `${tables[i].month} ${tables[i].year}`,
       TITLE_START_X,
       TITLE_START_Y
     );
     pdfDoc.autoTable ({
-      head: headRow,
-      body: leftRows,
+      body: habitRows,
       theme: 'grid',
       headStyles: headStyle,
       columnStyles: colStyle,
       startY: TABLE_START_Y,
-      didDrawCell: drawCellHook,
+      didDrawCell: habitsTableHook,
       margin: {right: TABLE_MARGIN},
     });
     pdfDoc.setPage (pageNumber);
 
-    const rightTitleX = TITLE_START_X + TABLE_MARGIN - 14;
-    pdfDoc.text (
-      `${rightTable.month} ${rightTable.year}`,
-      rightTitleX,
-      TITLE_START_Y
-    );
     pdfDoc.autoTable ({
       head: headRow,
-      body: rightRows,
+      body: tableRows,
       theme: 'grid',
       headStyles: headStyle,
       columnStyles: colStyle,
       startY: TABLE_START_Y,
-      didDrawCell: drawCellHook,
+      didDrawCell: trackingTableHook,
       margin: {left: TABLE_MARGIN},
     });
 
-    if (i < NUM_PAIRS - 1) {
+    if (i < tables.length - 1) {
       pdfDoc.addPage ('letter', 'p');
     }
   }

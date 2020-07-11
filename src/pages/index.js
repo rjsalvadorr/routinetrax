@@ -1,71 +1,36 @@
 import React from 'react';
 import {DateTime} from 'luxon';
 
-import {computeMonthRows, computeTables} from '../utils/time-calcs';
+import {getNewHabit} from '../utils/random-utils';
+import {computeInitialTables} from '../utils/table-utils';
 import {generatePdf} from '../utils/pdf-utils';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import SelectControl from '../components/select-control';
 import MonthDrawers from '../components/month-drawers';
-import {
-  paperOptions,
-  monthOptions,
-  DEFAULT_MONTHS,
-} from '../data/setup-values';
+import {paperOptions, monthOptions, DEFAULT_MONTHS} from '../data/setup-values';
 
 class IndexPage extends React.Component {
   constructor (props) {
     super (props);
 
     const localDt = DateTime.local ();
-    const computedTables = computeTables (localDt.toObject ());
+    const computedTables = computeInitialTables (localDt.toObject ());
 
     this.state = {
       startDate: localDt.toObject (),
-      // INVESTIGATE: is endDate even used?
-      endDate: localDt.plus ({months: DEFAULT_MONTHS}).toObject (),
       paperType: paperOptions[0],
       months: DEFAULT_MONTHS,
-      habits: [
-        {
-          icon: 'thing-1',
-          description: 'Resemble intellectual figs',
-        },
-        {
-          icon: 'thing-2',
-          description: 'Name a humorous peach',
-        },
-        {
-          icon: 'thing-3',
-          description: 'Separate peaches from dogs',
-        },
-      ],
       tables: computedTables,
       openTable: computedTables[0],
     };
 
-    this.handleStartDate = this.handleStartDate.bind (this);
-    this.handleEndDate = this.handleEndDate.bind (this);
     this.handlePaperType = this.handlePaperType.bind (this);
     this.handleMonths = this.handleMonths.bind (this);
     this.getPdfDocument = this.getPdfDocument.bind (this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind (this);
-  }
-
-  handleStartDate (uiDate) {
-    const newDate = DateTime.fromJSDate (uiDate);
-    this.setState ({
-      startDate: newDate.toObject (),
-      tables: [computeMonthRows (newDate.toObject ())],
-    });
-  }
-
-  handleEndDate (uiDate) {
-    const newDate = DateTime.fromJSDate (uiDate);
-    this.setState ({
-      endDate: newDate.toObject (),
-      tables: [computeMonthRows (newDate.toObject ())],
-    });
+    this.handleAddHabit = this.handleAddHabit.bind (this);
+    this.handleHabitTextChange = this.handleHabitTextChange.bind (this);
   }
 
   handlePaperType (uiPaperType) {
@@ -81,9 +46,65 @@ class IndexPage extends React.Component {
   }
 
   handleDrawerOpen (month, clickEvt) {
-    this.setState({
+    this.setState ({
       openTable: month,
-    })
+    });
+  }
+
+  handleAddHabit (evt) {
+    const targetId = evt.target.dataset.tableId;
+
+    // find and change the given habit
+    const tablesCopy = this.state.tables.map (tbl => {
+      if (tbl.id === targetId) {
+        const newTbl = {
+          year: tbl.year,
+          month: tbl.month,
+          label: tbl.label,
+          rows: tbl.rows,
+          habits: tbl.habits,
+        };
+        newTbl.habits.push (getNewHabit ());
+        return newTbl;
+      }
+      return tbl;
+    });
+
+    this.setState ({
+      tables: tablesCopy,
+    });
+  }
+
+  handleHabitTextChange (evt) {
+    const targetId = evt.target.dataset.habitId;
+    const targetValue = evt.target.value;
+
+    // find and change the given habit
+    const tablesCopy = this.state.tables.map (tbl => {
+      const newTbl = {
+        year: tbl.year,
+        month: tbl.month,
+        label: tbl.label,
+        rows: tbl.rows,
+      };
+      newTbl.habits = tbl.habits.map (habit => {
+        if (habit.id === targetId) {
+          const newHabit = {
+            icon: habit.icon,
+            description: targetValue,
+            id: habit.id,
+          };
+          return newHabit;
+        } else {
+          return habit;
+        }
+      });
+      return newTbl;
+    });
+
+    this.setState ({
+      tables: tablesCopy,
+    });
   }
 
   getPdfDocument () {
@@ -96,19 +117,26 @@ class IndexPage extends React.Component {
         <SEO title="Home" />
 
         <SelectControl
-            label="Months"
-            selectedValue={this.state.months}
-            values={monthOptions}
-            onChange={this.handleMonths}
-        />
-        <SelectControl
-            label="Paper"
-            selectedValue={this.state.paperType}
-            values={paperOptions}
-            onChange={this.handlePaperType}
+          label="Months"
+          selectedValue={this.state.months}
+          values={monthOptions}
+          onChange={this.handleMonths}
         />
 
-        <MonthDrawers months={this.state.tables} openMonth={this.state.openTable} openHandler={this.handleDrawerOpen}/>
+        <SelectControl
+          label="Paper"
+          selectedValue={this.state.paperType}
+          values={paperOptions}
+          onChange={this.handlePaperType}
+        />
+
+        <MonthDrawers
+          months={this.state.tables}
+          openMonth={this.state.openTable}
+          openHandler={this.handleDrawerOpen}
+          onAddHabit={this.handleAddHabit}
+          onDescChanged={this.handleHabitTextChange}
+        />
 
         <button
           className="rt-button rt-button--sheets"

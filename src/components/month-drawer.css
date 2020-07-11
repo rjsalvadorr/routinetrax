@@ -1,18 +1,19 @@
 .month-drawer {
-  color: #dddddd;
-  background-color: #333333;
+  background-color: #dddddd;
+  color: #333333;
   border-top: 2px solid #222222;
   border-right: 1px solid #222222;
   border-bottom: 2px solid #222222;
   border-left: 1px solid #222222;
+  border-radius: 3px;
 }
 
 .month-drawer__header {
   position: relative;
   padding: 0.25em;
   font-size: 1.25em;
-  color: #111111;
-  background-color: #888888;
+  color: #eeeeee;
+  background-color: #777777;
   padding-left: 3em;
 }
 

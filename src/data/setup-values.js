@@ -14,8 +14,6 @@ const monthOptions = [
 
 const DEFAULT_MONTHS = 4;
 
-const testMonths = [{}];
-
 export {
   paperOptions,
   monthOptions,

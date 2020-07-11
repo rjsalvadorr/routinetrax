@@ -1,0 +1,13 @@
+.month-habit {
+  margin: 0.4em 0;
+}
+
+.month-habit__desc {
+  vertical-align: super;
+  width: 60%;
+}
+
+.month-habit__img {
+  margin: 0 0.8em 0 0;
+  display: inline-block;
+}
