@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {v4 as uuidv4} from 'uuid';
-import foodIcons from '../data/food-icons';
+import foodIcons from '../data/icons/food-icons';
 
 const HABIT_PROMPTS = [
   'Look at spicy memes',

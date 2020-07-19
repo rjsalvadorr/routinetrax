@@ -8,15 +8,13 @@ const isMonthOpen = (month, openMonth) => {
   return month.label.toLowerCase () === openMonth.label.toLowerCase ();
 };
 
-const getMonthDrawers = (months, openMonth, openHandler, onAddHabit, onDescChanged) => {
+const getMonthDrawers = (months, openMonth, actions) => {
   return months.map(function (month) {
     return (<MonthDrawer
       month={month}
       isOpen={isMonthOpen(month, openMonth)}
-      openHandler={openHandler}
+      actions={actions}
       key={month.label}
-      onAddHabit={onAddHabit}
-      onDescChanged={onDescChanged}
     />);
   });
 }
@@ -24,29 +22,23 @@ const getMonthDrawers = (months, openMonth, openHandler, onAddHabit, onDescChang
 const MonthDrawers = ({
   months,
   openMonth,
-  openHandler,
-  onAddHabit,
-  onDescChanged,
+  actions,
 }) => (
   <div className="month-drawers">
-    {getMonthDrawers(months, openMonth, openHandler, onAddHabit, onDescChanged)}
+    {getMonthDrawers(months, openMonth, actions)}
   </div>
 )
 
 MonthDrawers.propTypes = {
   months: PropTypes.array,
   openMonth: PropTypes.object,
-  openHandler: PropTypes.func,
-  onAddHabit: PropTypes.func,
-  onDescChanged: PropTypes.func,
+  actions: PropTypes.object,
 }
 
 MonthDrawers.defaultProps = {
   months: [],
   openMonth: {},
-  openHandler: () => {},
-  onAddHabit: () => {},
-  onDescChanged: () => {},
+  actions: {},
 }
 
 export default MonthDrawers;

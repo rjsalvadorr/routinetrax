@@ -11,26 +11,24 @@ const getClassName = isOpen => {
     : className.concat (' month-drawer--closed');
 };
 
-const getToggleIcon = (isOpen, openHandler, month) => {
+const getToggleIcon = (isOpen, onOpen, month) => {
   if (isOpen) {
     return (<span className="toggle-button toggle-button--open"></span>);
   }
-  return (<span className="toggle-button toggle-button--closed" onClick={(evt) => { openHandler(month, evt) }}></span>);
+  return (<span className="toggle-button toggle-button--closed" onClick={(evt) => { onOpen(month, evt) }}></span>);
 };
 
 const MonthDrawer = ({
   month,
   isOpen,
-  openHandler,
-  onAddHabit,
-  onDescChanged,
+  actions,
 }) => (
   <div className={getClassName (isOpen)}>
     <header className="month-drawer__header">
-      {getToggleIcon (isOpen, openHandler, month)}{month.label}
+      {getToggleIcon (isOpen, actions.onOpen, month)}{month.label}
     </header>
     <main className="month-drawer__content">
-      <MonthHabits month={month} onAddHabit={onAddHabit} onDescChanged={onDescChanged}/>
+      <MonthHabits month={month} onAddHabit={actions.onAddHabit} onDescChanged={actions.onDescChanged}/>
     </main>
   </div>
 );
@@ -38,17 +36,13 @@ const MonthDrawer = ({
 MonthDrawer.propTypes = {
   month: PropTypes.object,
   isOpen: PropTypes.bool,
-  openHandler: PropTypes.func,
-  onAddHabit: PropTypes.func,
-  onDescChanged: PropTypes.func,
+  actions: PropTypes.object,
 };
 
 MonthDrawer.defaultProps = {
   month: {label: 'Junetober 3561'},
   isOpen: false,
-  openHandler: () => {},
-  onAddHabit: () => {},
-  onDescChanged: () => {},
+  actions: {},
 };
 
 export default MonthDrawer;

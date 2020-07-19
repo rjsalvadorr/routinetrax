@@ -8,7 +8,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import SelectControl from '../components/select-control';
 import MonthDrawers from '../components/month-drawers';
-import {paperOptions, monthOptions, DEFAULT_MONTHS} from '../data/setup-values';
+import {PAPER_OPTIONS, MONTH_OPTIONS, DEFAULT_MONTHS} from '../data/settings';
 
 class IndexPage extends React.Component {
   constructor (props) {
@@ -19,7 +19,7 @@ class IndexPage extends React.Component {
 
     this.state = {
       startDate: localDt.toObject (),
-      paperType: paperOptions[0],
+      paperType: PAPER_OPTIONS[0],
       months: DEFAULT_MONTHS,
       tables: computedTables,
       openTable: computedTables[0],
@@ -112,6 +112,12 @@ class IndexPage extends React.Component {
   }
 
   render () {
+    const actions = {
+      onOpen: this.handleDrawerOpen,
+      onAddHabit: this.handleAddHabit,
+      onDescChanged: this.handleHabitTextChange,
+    };
+
     return (
       <Layout>
         <SEO title="Home" />
@@ -119,23 +125,22 @@ class IndexPage extends React.Component {
         <SelectControl
           label="Months"
           selectedValue={this.state.months}
-          values={monthOptions}
+          values={MONTH_OPTIONS}
           onChange={this.handleMonths}
         />
 
         <SelectControl
           label="Paper"
           selectedValue={this.state.paperType}
-          values={paperOptions}
+          values={PAPER_OPTIONS}
           onChange={this.handlePaperType}
         />
 
         <MonthDrawers
           months={this.state.tables}
           openMonth={this.state.openTable}
-          openHandler={this.handleDrawerOpen}
-          onAddHabit={this.handleAddHabit}
-          onDescChanged={this.handleHabitTextChange}
+          numMonths={this.state.months.value}
+          actions={actions}
         />
 
         <button
