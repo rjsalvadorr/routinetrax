@@ -1,8 +1,7 @@
 import {DateTime} from 'luxon';
 import {v4 as uuidv4} from 'uuid';
 import {getRandomHabits} from './random-utils';
-
-const NUM_TABLES = 6; // must be an even number!
+import {MAX_MONTHS} from '../data/settings';
 
 const computeMonthRows = dtObj => {
   const yr = dtObj.year;
@@ -34,7 +33,7 @@ const computeInitialTables = startMonthObj => {
     habits: getRandomHabits (4),
   });
 
-  for (let offset = 1; offset < NUM_TABLES; offset++) {
+  for (let offset = 1; offset < MAX_MONTHS; offset++) {
     const currentDt = start.plus ({months: offset});
     tables.push ({
       id: uuidv4 (),
@@ -49,4 +48,4 @@ const computeInitialTables = startMonthObj => {
   return tables;
 };
 
-export {computeMonthRows, computeInitialTables, NUM_TABLES};
+export {computeMonthRows, computeInitialTables};

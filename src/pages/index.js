@@ -108,7 +108,8 @@ class IndexPage extends React.Component {
   }
 
   getPdfDocument () {
-    generatePdf (this.state.tables);
+    const renderedTables = this.state.tables.slice(0, this.state.months.value)
+    generatePdf (renderedTables);
   }
 
   render () {
@@ -117,6 +118,7 @@ class IndexPage extends React.Component {
       onAddHabit: this.handleAddHabit,
       onDescChanged: this.handleHabitTextChange,
     };
+    const renderedTables = this.state.tables.slice(0, this.state.months.value)
 
     return (
       <Layout>
@@ -137,9 +139,8 @@ class IndexPage extends React.Component {
         />
 
         <MonthDrawers
-          months={this.state.tables}
+          months={renderedTables}
           openMonth={this.state.openTable}
-          numMonths={this.state.months.value}
           actions={actions}
         />
 
