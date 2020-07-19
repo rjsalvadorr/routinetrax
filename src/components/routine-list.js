@@ -27,34 +27,57 @@ const addButton = (month, onAddHabit) => {
   if (month.habits.length < MAX_HABITS) {
     return (
       <button
-        className="rt-button rt-button--habit"
+        className="rt-button rt-button--add"
         onClick={onAddHabit}
         data-table-id={month.id}
       >
-        Add habit
+        Add
       </button>
     );
   }
   return null;
 };
 
-const RoutineList = ({month, iconMode, onDescChanged, onAddHabit}) => (
+const RoutineList = ({month, iconMode, actions}) => (
   <div className="routine-list">
-    {buildHabits (month, iconMode, onDescChanged)}
-    {addButton (month, onAddHabit)}
+    {buildHabits (month, iconMode, actions.onDescChanged)}
+    <div className="routine-list__btn-group">
+      {addButton (month, actions.onAddHabit)}
+      <button
+        className="rt-button rt-button--remove"
+        onClick={actions.onRemoveHabit}
+        data-table-id={month.id}
+      >
+        Remove
+      </button>
+
+      <button
+        className="rt-button rt-button--clear"
+        onClick={() => {}}
+        data-table-id={month.id}
+      >
+        Clear
+      </button>
+
+      <button
+        className="rt-button rt-button--copy"
+        onClick={() => {}}
+        data-table-id={month.id}
+      >
+        Copy
+      </button>
+    </div>
   </div>
 );
 
 RoutineList.propTypes = {
   month: PropTypes.object,
-  onAddHabit: PropTypes.func,
-  onDescChanged: PropTypes.func,
+  actions: PropTypes.object,
 };
 
 RoutineList.defaultProps = {
   month: {},
-  onAddHabit: () => {},
-  onDescChanged: () => {},
+  actions: {},
 };
 
 export default RoutineList;

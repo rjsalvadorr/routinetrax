@@ -36,6 +36,7 @@ class IndexPage extends React.Component {
     this.getPdfDocument = this.getPdfDocument.bind (this);
     this.handleDrawerOpen = this.handleDrawerOpen.bind (this);
     this.handleAddHabit = this.handleAddHabit.bind (this);
+    this.handleRemoveHabit = this.handleRemoveHabit.bind (this);
     this.handleHabitTextChange = this.handleHabitTextChange.bind (this);
   }
 
@@ -71,6 +72,30 @@ class IndexPage extends React.Component {
           habits: tbl.habits,
         };
         newTbl.habits.push (getNewHabit ());
+        return newTbl;
+      }
+      return tbl;
+    });
+
+    this.setState ({
+      tables: tablesCopy,
+    });
+  }
+
+  handleRemoveHabit (evt) {
+    const targetId = evt.target.dataset.tableId;
+
+    // find and change the given habit
+    const tablesCopy = this.state.tables.map (tbl => {
+      if (tbl.id === targetId) {
+        const newTbl = {
+          year: tbl.year,
+          month: tbl.month,
+          label: tbl.label,
+          rows: tbl.rows,
+          habits: tbl.habits,
+        };
+        newTbl.habits.pop();
         return newTbl;
       }
       return tbl;
@@ -122,6 +147,7 @@ class IndexPage extends React.Component {
     const actions = {
       onOpen: this.handleDrawerOpen,
       onAddHabit: this.handleAddHabit,
+      onRemoveHabit: this.handleRemoveHabit,
       onDescChanged: this.handleHabitTextChange,
     };
     const renderedTables = this.state.tables.slice (0, this.state.months.value);
