@@ -6,10 +6,21 @@ import './month-habits.css';
 
 const MAX_HABITS = 9;
 
-const buildHabits = (month, onDescChanged) => {
-  return month.habits.map (habit => {
-    return <MonthHabit habit={habit} key={habit.id} onDescChanged={onDescChanged}/>;
-  });
+const buildHabits = (month, iconMode, onDescChanged) => {
+  const habits = [];
+  for (let i = 0; i < month.habits.length; i++) {
+    const currentHabit = month.habits[i];
+    habits.push (
+      <MonthHabit
+        habit={currentHabit}
+        number={i + 1}
+        iconMode={iconMode}
+        onDescChanged={onDescChanged}
+        key={currentHabit.id}
+      />
+    );
+  }
+  return habits;
 };
 
 const addButton = (month, onAddHabit) => {
@@ -25,16 +36,12 @@ const addButton = (month, onAddHabit) => {
     );
   }
   return null;
-}
+};
 
-const MonthHabits = ({
-  month,
-  onDescChanged,
-  onAddHabit,
-}) => (
+const MonthHabits = ({month, iconMode, onDescChanged, onAddHabit}) => (
   <div className="month-habits">
-    {buildHabits (month, onDescChanged)}
-    {addButton(month, onAddHabit)}
+    {buildHabits (month, iconMode, onDescChanged)}
+    {addButton (month, onAddHabit)}
   </div>
 );
 

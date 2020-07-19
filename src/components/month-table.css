@@ -1,4 +1,4 @@
-.month-drawer {
+.month-table {
   background-color: #dddddd;
   color: #333333;
   border-top: 2px solid #222222;
@@ -8,7 +8,7 @@
   border-radius: 3px;
 }
 
-.month-drawer__header {
+.month-table__header {
   position: relative;
   padding: 0.25em;
   font-size: 1.25em;
@@ -17,7 +17,7 @@
   padding-left: 3em;
 }
 
-.month-drawer__header .toggle-button {
+.month-table__header .toggle-button {
   position: absolute;
   left: 0.6em;
   display: block;
@@ -29,14 +29,14 @@
   border: 1px solid #222222;
 }
 
-.month-drawer__header .toggle-button--open {
+.month-table__header .toggle-button--open {
   background-color: #666666;
 }
 
-.month-drawer--closed .month-drawer__content{
+.month-table--closed .month-table__content{
   display: none;
 }
 
-.month-drawer__content {
+.month-table__content {
   padding: 0.25em;
 }

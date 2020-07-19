@@ -7,7 +7,21 @@
   width: 60%;
 }
 
+.month-habit__key {
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .month-habit__img {
   margin: 0 0.8em 0 0;
-  display: inline-block;
+}
+
+.month-habit__number {
+  text-align: center;
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: bold;
+  margin-right: 0.33em;
 }

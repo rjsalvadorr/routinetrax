@@ -7,8 +7,13 @@ import {generatePdf} from '../utils/pdf-utils';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import SelectControl from '../components/select-control';
-import MonthDrawers from '../components/month-drawers';
-import {PAPER_OPTIONS, MONTH_OPTIONS, DEFAULT_MONTHS} from '../data/settings';
+import MonthTables from '../components/month-tables';
+import {
+  PAPER_OPTIONS,
+  MONTH_OPTIONS,
+  DEFAULT_MONTHS,
+  DEFAULT_ICON_MODE,
+} from '../data/settings';
 
 class IndexPage extends React.Component {
   constructor (props) {
@@ -23,6 +28,7 @@ class IndexPage extends React.Component {
       months: DEFAULT_MONTHS,
       tables: computedTables,
       openTable: computedTables[0],
+      iconMode: DEFAULT_ICON_MODE,
     };
 
     this.handlePaperType = this.handlePaperType.bind (this);
@@ -108,8 +114,8 @@ class IndexPage extends React.Component {
   }
 
   getPdfDocument () {
-    const renderedTables = this.state.tables.slice(0, this.state.months.value)
-    generatePdf (renderedTables);
+    const renderedTables = this.state.tables.slice (0, this.state.months.value);
+    generatePdf (renderedTables, this.state.iconMode);
   }
 
   render () {
@@ -118,7 +124,7 @@ class IndexPage extends React.Component {
       onAddHabit: this.handleAddHabit,
       onDescChanged: this.handleHabitTextChange,
     };
-    const renderedTables = this.state.tables.slice(0, this.state.months.value)
+    const renderedTables = this.state.tables.slice (0, this.state.months.value);
 
     return (
       <Layout>
@@ -138,8 +144,9 @@ class IndexPage extends React.Component {
           onChange={this.handlePaperType}
         />
 
-        <MonthDrawers
+        <MonthTables
           months={renderedTables}
+          iconMode={this.state.iconMode}
           openMonth={this.state.openTable}
           actions={actions}
         />
