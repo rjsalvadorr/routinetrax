@@ -6,7 +6,7 @@ import './routine-list.css';
 
 const MAX_HABITS = 9;
 
-const buildHabits = (month, iconMode, onDescChanged) => {
+const buildRoutines = (month, iconMode, actions) => {
   const habits = [];
   for (let i = 0; i < month.habits.length; i++) {
     const currentHabit = month.habits[i];
@@ -15,7 +15,7 @@ const buildHabits = (month, iconMode, onDescChanged) => {
         habit={currentHabit}
         number={i + 1}
         iconMode={iconMode}
-        onDescChanged={onDescChanged}
+        actions={actions}
         key={currentHabit.id}
       />
     );
@@ -38,11 +38,27 @@ const addButton = (month, onAddHabit) => {
   return null;
 };
 
+const copyLastButton = (month, onCopyLast) => {
+  if (!(month.tags && month.tags.includes('first'))) {
+    return (
+      <button
+        className="rt-button rt-button--copy"
+        onClick={onCopyLast}
+        data-table-id={month.id}
+      >
+        Copy Last
+      </button>
+    );
+  }
+  return null;
+};
+
 const RoutineList = ({month, iconMode, actions}) => (
   <div className="routine-list">
-    {buildHabits (month, iconMode, actions.onDescChanged)}
+    {buildRoutines (month, iconMode, actions)}
     <div className="routine-list__btn-group">
       {addButton (month, actions.onAddHabit)}
+
       <button
         className="rt-button rt-button--remove"
         onClick={actions.onRemoveHabit}
@@ -53,19 +69,13 @@ const RoutineList = ({month, iconMode, actions}) => (
 
       <button
         className="rt-button rt-button--clear"
-        onClick={() => {}}
+        onClick={actions.onClearHabits}
         data-table-id={month.id}
       >
         Clear
       </button>
 
-      <button
-        className="rt-button rt-button--copy"
-        onClick={() => {}}
-        data-table-id={month.id}
-      >
-        Copy
-      </button>
+      {copyLastButton (month, () => {})}
     </div>
   </div>
 );

@@ -11,30 +11,36 @@ const getHabitKey = (habit, number, isIconMode) => {
   }
 }
 
-const Routine = ({habit, number, iconMode, onDescChanged}) => (
-  <div className="routine">
-    {getHabitKey(habit, number, iconMode)}
-    <input
-      type="text"
-      className="routine__desc"
-      name="routine__desc"
-      defaultValue={habit.description}
-      onChange={onDescChanged}
-      required
-      maxLength="30"
-      data-habit-id={habit.id}
-    />
-  </div>
-);
+const Routine = ({habit, number, iconMode, actions}) => {
+  return (
+    <div className="routine">
+      {getHabitKey(habit, number, iconMode)}
+      <input
+        type="text"
+        className="routine__desc"
+        name="routine__desc"
+        defaultValue={habit.description}
+        onChange={actions.onDescChanged}
+        required
+        maxLength="40"
+        data-habit-id={habit.id}
+      />
+    </div>
+  );
+}
 
 Routine.propTypes = {
-  month: PropTypes.object,
-  onDescChanged: PropTypes.func,
+  habit: PropTypes.object,
+  number: PropTypes.number,
+  iconMode: PropTypes.bool,
+  actions: PropTypes.object,
 };
 
 Routine.defaultProps = {
-  month: {},
-  onDescChanged: () => {},
+  habit: {},
+  number: 99,
+  iconMode: false,
+  actions: {},
 };
 
 export default Routine;

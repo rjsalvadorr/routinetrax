@@ -2,7 +2,7 @@ import React from 'react';
 import {DateTime} from 'luxon';
 
 import {getNewHabit} from '../utils/random-utils';
-import {computeInitialTables} from '../utils/table-utils';
+import {computeInitialTables, transformTables} from '../utils/table-utils';
 import {generatePdf} from '../utils/pdf-utils';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -27,16 +27,15 @@ class IndexPage extends React.Component {
       paperType: PAPER_OPTIONS[0],
       months: DEFAULT_MONTHS,
       tables: computedTables,
-      openTable: computedTables[0],
       iconMode: DEFAULT_ICON_MODE,
     };
 
     this.handlePaperType = this.handlePaperType.bind (this);
     this.handleMonths = this.handleMonths.bind (this);
     this.getPdfDocument = this.getPdfDocument.bind (this);
-    this.handleDrawerOpen = this.handleDrawerOpen.bind (this);
     this.handleAddHabit = this.handleAddHabit.bind (this);
     this.handleRemoveHabit = this.handleRemoveHabit.bind (this);
+    this.handleClearHabits = this.handleClearHabits.bind (this);
     this.handleHabitTextChange = this.handleHabitTextChange.bind (this);
   }
 
@@ -52,57 +51,49 @@ class IndexPage extends React.Component {
     });
   }
 
-  handleDrawerOpen (month, clickEvt) {
-    this.setState ({
-      openTable: month,
-    });
-  }
-
   handleAddHabit (evt) {
     const targetId = evt.target.dataset.tableId;
 
-    // find and change the given habit
-    const tablesCopy = this.state.tables.map (tbl => {
-      if (tbl.id === targetId) {
-        const newTbl = {
-          year: tbl.year,
-          month: tbl.month,
-          label: tbl.label,
-          rows: tbl.rows,
-          habits: tbl.habits,
-        };
-        newTbl.habits.push (getNewHabit ());
-        return newTbl;
+    const transform = (tbl) => {
+      if(tbl.id === targetId) {
+        tbl.habits.push (getNewHabit ());
       }
       return tbl;
-    });
+    }
 
     this.setState ({
-      tables: tablesCopy,
+      tables: transformTables(this.state.tables, transform),
     });
   }
 
   handleRemoveHabit (evt) {
     const targetId = evt.target.dataset.tableId;
 
-    // find and change the given habit
-    const tablesCopy = this.state.tables.map (tbl => {
-      if (tbl.id === targetId) {
-        const newTbl = {
-          year: tbl.year,
-          month: tbl.month,
-          label: tbl.label,
-          rows: tbl.rows,
-          habits: tbl.habits,
-        };
-        newTbl.habits.pop();
-        return newTbl;
+    const transform = (tbl) => {
+      if(tbl.id === targetId) {
+        tbl.habits.pop();
       }
       return tbl;
-    });
+    }
 
     this.setState ({
-      tables: tablesCopy,
+      tables: transformTables(this.state.tables, transform),
+    });
+  }
+
+  handleClearHabits (evt) {
+    const targetId = evt.target.dataset.tableId;
+
+    const transform = (tbl) => {
+      if(tbl.id === targetId) {
+        tbl.habits = [];
+        tbl.habits.push (getNewHabit ());
+      }
+      return tbl;
+    }
+
+    this.setState ({
+      tables: transformTables(this.state.tables, transform),
     });
   }
 
@@ -110,15 +101,8 @@ class IndexPage extends React.Component {
     const targetId = evt.target.dataset.habitId;
     const targetValue = evt.target.value;
 
-    // find and change the given habit
-    const tablesCopy = this.state.tables.map (tbl => {
-      const newTbl = {
-        year: tbl.year,
-        month: tbl.month,
-        label: tbl.label,
-        rows: tbl.rows,
-      };
-      newTbl.habits = tbl.habits.map (habit => {
+    const transform = (tbl) => {
+      tbl.habits = tbl.habits.map (habit => {
         if (habit.id === targetId) {
           const newHabit = {
             icon: habit.icon,
@@ -130,11 +114,11 @@ class IndexPage extends React.Component {
           return habit;
         }
       });
-      return newTbl;
-    });
+      return tbl;
+    }
 
     this.setState ({
-      tables: tablesCopy,
+      tables: transformTables(this.state.tables, transform),
     });
   }
 
@@ -148,6 +132,7 @@ class IndexPage extends React.Component {
       onOpen: this.handleDrawerOpen,
       onAddHabit: this.handleAddHabit,
       onRemoveHabit: this.handleRemoveHabit,
+      onClearHabits: this.handleClearHabits,
       onDescChanged: this.handleHabitTextChange,
     };
     const renderedTables = this.state.tables.slice (0, this.state.months.value);
@@ -180,7 +165,6 @@ class IndexPage extends React.Component {
         <MonthLists
           months={renderedTables}
           iconMode={this.state.iconMode}
-          openMonth={this.state.openTable}
           actions={actions}
         />
       </Layout>

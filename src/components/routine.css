@@ -1,10 +1,7 @@
 .routine {
-  margin: 0.4em 0;
-}
-
-.routine__desc {
-  vertical-align: super;
-  width: 60%;
+  margin: 0.6em 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .routine__key {
@@ -12,6 +9,12 @@
   width: 32px;
   display: inline-block;
   vertical-align: top;
+  flex: 0 1 32px;
+}
+
+.routine__desc {
+  vertical-align: super;
+  flex: 0 1 100%;
 }
 
 .routine__img {

@@ -32,6 +32,7 @@ const computeInitialTables = startMonthObj => {
     label: `${start.monthLong} ${start.year}`,
     rows: computeMonthRows (start),
     habits: getRandomHabits (NUM_DEFAULT_HABITS),
+    tags: ['first'],
   });
 
   for (let offset = 1; offset < MAX_MONTHS; offset++) {
@@ -49,4 +50,21 @@ const computeInitialTables = startMonthObj => {
   return tables;
 };
 
-export {computeMonthRows, computeInitialTables};
+const transformTables = (tables, transform) => {
+  // find and change the given habit
+  const tablesCopy = tables.map (tbl => {
+    let newTbl = {
+      id: tbl.id,
+      year: tbl.year,
+      month: tbl.month,
+      label: tbl.label,
+      rows: tbl.rows,
+      habits: tbl.habits,
+      tags: tbl.tags,
+    };
+    return transform(newTbl);
+  });
+  return tablesCopy;
+}
+
+export {computeMonthRows, computeInitialTables, transformTables};

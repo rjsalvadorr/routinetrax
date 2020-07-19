@@ -1,12 +1,8 @@
-import PropTypes from "prop-types"
-import React from "react"
+import PropTypes from "prop-types";
+import React from "react";
 import MonthList from './month-list';
 
-import "./month-lists.css"
-
-const isMonthOpen = (month, openMonth) => {
-  return month.label.toLowerCase () === openMonth.label.toLowerCase ();
-};
+import "./month-lists.css";
 
 const getMonthLists = (months, iconMode, actions) => {
   return months.map(function (month) {
