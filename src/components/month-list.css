@@ -1,0 +1,20 @@
+.month-list {
+  background-color: #dddddd;
+  color: #333333;
+  border-radius: 4px;
+  margin: 1em 0;
+}
+
+.month-list__header {
+  position: relative;
+  padding: 0.4em;
+  font-size: 1.25em;
+  color: #eeeeee;
+  background-color: #777777;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.month-list__content {
+  padding: 0.6em 0.4em;
+}

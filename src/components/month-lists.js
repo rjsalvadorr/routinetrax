@@ -1,46 +1,42 @@
 import PropTypes from "prop-types"
 import React from "react"
-import MonthTable from './month-table';
+import MonthList from './month-list';
 
-import "./month-tables.css"
+import "./month-lists.css"
 
 const isMonthOpen = (month, openMonth) => {
   return month.label.toLowerCase () === openMonth.label.toLowerCase ();
 };
 
-const getMonthTables = (months, iconMode, openMonth, actions) => {
+const getMonthLists = (months, iconMode, actions) => {
   return months.map(function (month) {
-    return (<MonthTable
+    return (<MonthList
       month={month}
       iconMode={iconMode}
-      isOpen={isMonthOpen(month, openMonth)}
       actions={actions}
       key={month.label}
     />);
   });
 }
 
-const MonthTables = ({
+const MonthLists = ({
   months,
   iconMode,
-  openMonth,
   actions,
 }) => (
-  <div className="month-tables">
-    {getMonthTables(months, iconMode, openMonth, actions)}
+  <div className="month-lists">
+    {getMonthLists(months, iconMode, actions)}
   </div>
 )
 
-MonthTables.propTypes = {
+MonthLists.propTypes = {
   months: PropTypes.array,
-  openMonth: PropTypes.object,
   actions: PropTypes.object,
 }
 
-MonthTables.defaultProps = {
+MonthLists.defaultProps = {
   months: [],
-  openMonth: {},
   actions: {},
 }
 
-export default MonthTables;
+export default MonthLists;

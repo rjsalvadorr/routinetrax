@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import MonthHabit from '../components/month-habit';
+import Routine from '../components/routine';
 
-import './month-habits.css';
+import './routine-list.css';
 
 const MAX_HABITS = 9;
 
@@ -11,7 +11,7 @@ const buildHabits = (month, iconMode, onDescChanged) => {
   for (let i = 0; i < month.habits.length; i++) {
     const currentHabit = month.habits[i];
     habits.push (
-      <MonthHabit
+      <Routine
         habit={currentHabit}
         number={i + 1}
         iconMode={iconMode}
@@ -38,23 +38,23 @@ const addButton = (month, onAddHabit) => {
   return null;
 };
 
-const MonthHabits = ({month, iconMode, onDescChanged, onAddHabit}) => (
-  <div className="month-habits">
+const RoutineList = ({month, iconMode, onDescChanged, onAddHabit}) => (
+  <div className="routine-list">
     {buildHabits (month, iconMode, onDescChanged)}
     {addButton (month, onAddHabit)}
   </div>
 );
 
-MonthHabits.propTypes = {
+RoutineList.propTypes = {
   month: PropTypes.object,
   onAddHabit: PropTypes.func,
   onDescChanged: PropTypes.func,
 };
 
-MonthHabits.defaultProps = {
+RoutineList.defaultProps = {
   month: {},
   onAddHabit: () => {},
   onDescChanged: () => {},
 };
 
-export default MonthHabits;
+export default RoutineList;

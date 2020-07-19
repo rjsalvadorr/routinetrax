@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import './month-habit.css';
+import './routine.css';
 
 const getHabitKey = (habit, number, isIconMode) => {
   if(isIconMode) {
-    return (<img className="month-habit__key month-habit__img" src={habit.icon} alt="habit-icon" />);
+    return (<img className="routine__key routine__img" src={habit.icon} alt="habit-icon" />);
   } else {
-    return (<span className="month-habit__key month-habit__number">{number}</span>);
+    return (<span className="routine__key routine__number">{number}</span>);
   }
 }
 
-const MonthHabit = ({habit, number, iconMode, onDescChanged}) => (
-  <div className="month-habit">
+const Routine = ({habit, number, iconMode, onDescChanged}) => (
+  <div className="routine">
     {getHabitKey(habit, number, iconMode)}
     <input
       type="text"
-      className="month-habit__desc"
-      name="month-habit__desc"
+      className="routine__desc"
+      name="routine__desc"
       defaultValue={habit.description}
       onChange={onDescChanged}
       required
@@ -27,14 +27,14 @@ const MonthHabit = ({habit, number, iconMode, onDescChanged}) => (
   </div>
 );
 
-MonthHabit.propTypes = {
+Routine.propTypes = {
   month: PropTypes.object,
   onDescChanged: PropTypes.func,
 };
 
-MonthHabit.defaultProps = {
+Routine.defaultProps = {
   month: {},
   onDescChanged: () => {},
 };
 
-export default MonthHabit;
+export default Routine;

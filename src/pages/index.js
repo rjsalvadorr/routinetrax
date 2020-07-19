@@ -7,7 +7,7 @@ import {generatePdf} from '../utils/pdf-utils';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import SelectControl from '../components/select-control';
-import MonthTables from '../components/month-tables';
+import MonthLists from '../components/month-lists';
 import {
   PAPER_OPTIONS,
   MONTH_OPTIONS,
@@ -137,19 +137,12 @@ class IndexPage extends React.Component {
           onChange={this.handleMonths}
         />
 
-        <SelectControl
+        {/* <SelectControl
           label="Paper"
           selectedValue={this.state.paperType}
           values={PAPER_OPTIONS}
           onChange={this.handlePaperType}
-        />
-
-        <MonthTables
-          months={renderedTables}
-          iconMode={this.state.iconMode}
-          openMonth={this.state.openTable}
-          actions={actions}
-        />
+        /> */}
 
         <button
           className="rt-button rt-button--sheets"
@@ -157,6 +150,13 @@ class IndexPage extends React.Component {
         >
           Get routinetrax sheets
         </button>
+
+        <MonthLists
+          months={renderedTables}
+          iconMode={this.state.iconMode}
+          openMonth={this.state.openTable}
+          actions={actions}
+        />
       </Layout>
     );
   }

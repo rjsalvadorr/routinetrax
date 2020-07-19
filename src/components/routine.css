@@ -1,24 +1,24 @@
-.month-habit {
+.routine {
   margin: 0.4em 0;
 }
 
-.month-habit__desc {
+.routine__desc {
   vertical-align: super;
   width: 60%;
 }
 
-.month-habit__key {
+.routine__key {
   height: 32px;
   width: 32px;
   display: inline-block;
   vertical-align: top;
 }
 
-.month-habit__img {
+.routine__img {
   margin: 0 0.8em 0 0;
 }
 
-.month-habit__number {
+.routine__number {
   text-align: center;
   font-size: 32px;
   line-height: 32px;
