@@ -1,6 +1,6 @@
-/* .month-lists {
-  background-color: #888888;
-  padding: 4px;
-  margin-bottom: 1em;
-  border-radius: 4px;
-} */
+.month-lists {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
