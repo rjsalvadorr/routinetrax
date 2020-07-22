@@ -9,6 +9,7 @@ const SelectControl = ({
   selectedValue,
   values,
   onChange,
+  disabled = false,
 }) => (
   <div className="rt-control-group rt-control-group--select">
     <span className="label">{label}</span>
@@ -18,6 +19,7 @@ const SelectControl = ({
       value={selectedValue}
       options={values}
       onChange={onChange}
+      isDisabled={disabled}
     />
   </div>
 )

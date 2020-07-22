@@ -35,7 +35,7 @@ const computeInitialTables = startMonthObj => {
     tags: ['first'],
   });
 
-  for (let offset = 1; offset < MAX_MONTHS; offset++) {
+  for (let offset = 1; offset <= MAX_MONTHS; offset++) {
     const currentDt = start.plus ({months: offset});
     tables.push ({
       id: uuidv4 (),

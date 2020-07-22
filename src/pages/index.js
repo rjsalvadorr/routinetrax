@@ -13,6 +13,7 @@ import {
   MONTH_OPTIONS,
   DEFAULT_MONTHS,
   DEFAULT_ICON_MODE,
+  DEFAULT_INCL_CURRENT_MTH,
 } from '../data/settings';
 
 class IndexPage extends React.Component {
@@ -28,15 +29,20 @@ class IndexPage extends React.Component {
       months: DEFAULT_MONTHS,
       tables: computedTables,
       iconMode: DEFAULT_ICON_MODE,
+      includeCurrentMonth: DEFAULT_INCL_CURRENT_MTH,
     };
 
     this.handlePaperType = this.handlePaperType.bind (this);
     this.handleMonths = this.handleMonths.bind (this);
+    this.handleInclCurrentMonth = this.handleInclCurrentMonth.bind (this);
+    
+    this.handleAddRoutine = this.handleAddRoutine.bind (this);
+    this.handleRemoveRoutine = this.handleRemoveRoutine.bind (this);
+    this.handleClearRoutines = this.handleClearRoutines.bind (this);
+    this.handleRoutineTextChange = this.handleRoutineTextChange.bind (this);
+
     this.getPdfDocument = this.getPdfDocument.bind (this);
-    this.handleAddHabit = this.handleAddHabit.bind (this);
-    this.handleRemoveHabit = this.handleRemoveHabit.bind (this);
-    this.handleClearHabits = this.handleClearHabits.bind (this);
-    this.handleHabitTextChange = this.handleHabitTextChange.bind (this);
+    console.log(this.state);
   }
 
   handlePaperType (uiPaperType) {
@@ -51,7 +57,13 @@ class IndexPage extends React.Component {
     });
   }
 
-  handleAddHabit (evt) {
+  handleInclCurrentMonth (evt) {
+    this.setState ({
+      includeCurrentMonth: evt.target.checked,
+    });
+  }
+
+  handleAddRoutine (evt) {
     const targetId = evt.target.dataset.tableId;
 
     const transform = (tbl) => {
@@ -66,7 +78,7 @@ class IndexPage extends React.Component {
     });
   }
 
-  handleRemoveHabit (evt) {
+  handleRemoveRoutine (evt) {
     const targetId = evt.target.dataset.tableId;
 
     const transform = (tbl) => {
@@ -81,7 +93,7 @@ class IndexPage extends React.Component {
     });
   }
 
-  handleClearHabits (evt) {
+  handleClearRoutines (evt) {
     const targetId = evt.target.dataset.tableId;
 
     const transform = (tbl) => {
@@ -97,7 +109,7 @@ class IndexPage extends React.Component {
     });
   }
 
-  handleHabitTextChange (evt) {
+  handleRoutineTextChange (evt) {
     const targetId = evt.target.dataset.habitId;
     const targetValue = evt.target.value;
 
@@ -123,19 +135,23 @@ class IndexPage extends React.Component {
   }
 
   getPdfDocument () {
-    const renderedTables = this.state.tables.slice (0, this.state.months.value);
-    generatePdf (renderedTables, this.state.iconMode);
+    generatePdf (this.getRenderedTables(), this.state.iconMode);
+  }
+
+  getRenderedTables() {
+    const sliceStart = this.state.includeCurrentMonth ? 0 : 1;
+    const sliceEnd = this.state.includeCurrentMonth ? this.state.months.value : this.state.months.value + 1;
+    return this.state.tables.slice (sliceStart, sliceEnd);
   }
 
   render () {
     const actions = {
       onOpen: this.handleDrawerOpen,
-      onAddHabit: this.handleAddHabit,
-      onRemoveHabit: this.handleRemoveHabit,
-      onClearHabits: this.handleClearHabits,
-      onDescChanged: this.handleHabitTextChange,
+      onAddHabit: this.handleAddRoutine,
+      onRemoveHabit: this.handleRemoveRoutine,
+      onClearHabits: this.handleClearRoutines,
+      onDescChanged: this.handleRoutineTextChange,
     };
-    const renderedTables = this.state.tables.slice (0, this.state.months.value);
 
     return (
       <Layout>
@@ -148,12 +164,23 @@ class IndexPage extends React.Component {
           onChange={this.handleMonths}
         />
 
-        {/* <SelectControl
+        <div className="rt-control-group rt-control-group--checkbox">
+          <input type="checkbox"
+            className="rt-control rt-control--checkbox"
+            name="include-current-month"
+            defaultChecked={this.state.includeCurrentMonth}
+            onChange={this.handleInclCurrentMonth}
+          />
+          <span className="label">Include current month</span>
+        </div>
+
+        <SelectControl
           label="Paper"
           selectedValue={this.state.paperType}
           values={PAPER_OPTIONS}
           onChange={this.handlePaperType}
-        /> */}
+          disabled={true}
+        />
 
         <button
           className="rt-button rt-button--sheets"
@@ -163,7 +190,7 @@ class IndexPage extends React.Component {
         </button>
 
         <MonthLists
-          months={renderedTables}
+          months={this.getRenderedTables()}
           iconMode={this.state.iconMode}
           actions={actions}
         />
