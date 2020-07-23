@@ -1,0 +1,11 @@
+.routine-list {
+  padding: 0.6em;
+}
+
+.routine-list__btn-group {
+  margin-top: 1.5em;
+}
+
+.routine-list .rt-button {
+  margin-right: 0.6em;
+}
