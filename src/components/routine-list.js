@@ -38,6 +38,21 @@ const addButton = (month, onAddHabit) => {
   return null;
 };
 
+const removeButton = (month, onRemoveHabit) => {
+  if (month.habits.length > 1) {
+    return (
+      <button
+        className="rt-button rt-button--remove"
+        onClick={onRemoveHabit}
+        data-table-id={month.id}
+      >
+        Remove
+      </button>
+    );
+  }
+  return null;
+};
+
 const copyLastButton = (month, onCopyLast) => {
   if (!(month.tags && month.tags.includes('first'))) {
     return (
@@ -59,13 +74,7 @@ const RoutineList = ({month, iconMode, actions}) => (
     <div className="routine-list__btn-group">
       {addButton (month, actions.onAddHabit)}
 
-      <button
-        className="rt-button rt-button--remove"
-        onClick={actions.onRemoveHabit}
-        data-table-id={month.id}
-      >
-        Remove
-      </button>
+      {removeButton (month, actions.onRemoveHabit)}
 
       <button
         className="rt-button rt-button--clear"

@@ -15,6 +15,12 @@
 .routine__desc {
   vertical-align: super;
   flex: 0 1 100%;
+  padding-left: 0.4em;
+  border: none;
+  border-radius: 4px;
+
+  color: #ffffff;
+  background-color: #585e60;
 }
 
 .routine__img {

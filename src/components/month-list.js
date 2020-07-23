@@ -12,7 +12,7 @@ const MonthList = ({
   return (
     <div className='month-list'>
       <header className="month-list__header">
-        <span>{month.label}</span>
+        <span className="month-list__label">{month.label}</span>
       </header>
       <main className="month-list__content">
         <RoutineList month={month} iconMode={iconMode} actions={actions}/>

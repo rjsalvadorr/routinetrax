@@ -22,7 +22,14 @@ const MAX_MONTHS = MONTH_OPTIONS[11].value;
 
 const NUM_DEFAULT_HABITS = 5;
 const DEFAULT_ICON_MODE = false;
-const DEFAULT_INCL_CURRENT_MTH = false;
+const DEFAULT_INCL_CURRENT_MTH = true;
+
+const COLORS = {
+  darkGrey: '#3c4245',
+  grey: '#6f7678',
+  green: '#658283',
+  pastel: '#dfcdc3',
+}
 
 export {
   PAPER_OPTIONS,
@@ -32,4 +39,5 @@ export {
   NUM_DEFAULT_HABITS,
   DEFAULT_ICON_MODE,
   DEFAULT_INCL_CURRENT_MTH,
+  COLORS,
 }

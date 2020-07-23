@@ -1,6 +1,7 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import { COLORS } from '../data/settings'
 
 const headerColor = '#ffffff';
 
@@ -10,7 +11,7 @@ const Header = ({
 }) => (
   <header
     style={{
-      background: `rebeccapurple`,
+      background: COLORS.green,
       marginBottom: `1.45rem`,
     }}
   >

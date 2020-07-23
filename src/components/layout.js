@@ -5,16 +5,16 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+import React from 'react';
+import PropTypes from 'prop-types';
+import {useStaticQuery, graphql} from 'gatsby';
 
-import Header from "./header"
-import "./layout.css"
-import "./layout-overrides.css"
+import Header from './header';
+import './layout.css';
+import './layout-overrides.css';
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
+const Layout = ({children}) => {
+  const data = useStaticQuery (graphql`
     query SiteTitleQuery {
       site {
         siteMetadata {
@@ -23,11 +23,14 @@ const Layout = ({ children }) => {
         }
       }
     }
-  `)
+  `);
 
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} siteDesc={data.site.siteMetadata.description} />
+    <div className="main-layout">
+      <Header
+        siteTitle={data.site.siteMetadata.title}
+        siteDesc={data.site.siteMetadata.description}
+      />
       <div
         style={{
           margin: `0 auto`,
@@ -37,18 +40,18 @@ const Layout = ({ children }) => {
         className="main-wrapper"
       >
         <main className="main">{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
+        {/* <footer className="main-footer">
+          <span className="main-footer__text">
+            © {new Date ().getFullYear ()} RJ Salvador <br />
+          </span>
+        </footer> */}
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default Layout
+export default Layout;
