@@ -16,8 +16,11 @@
 }
 
 .month-list__label {
-  font-size: 1.75em;
-  letter-spacing: 0.05em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   vertical-align: middle;
 }

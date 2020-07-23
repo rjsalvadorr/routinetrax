@@ -60,6 +60,7 @@ const copyLastButton = (month, onCopyLast) => {
         className="rt-button rt-button--copy"
         onClick={onCopyLast}
         data-table-id={month.id}
+        disabled="true"
       >
         Copy Last
       </button>

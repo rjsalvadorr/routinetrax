@@ -21,3 +21,7 @@ body {
   padding: 0.2em 0.6em;
   border-radius: 4px;
 }
+
+.rt-control--checkbox {
+  margin-right: 0.3em;
+}

@@ -1,3 +1,7 @@
 .rt-control-group {
   margin-bottom: 0.75em;
 }
+
+.rt-control--select {
+  color: #111111;
+}
