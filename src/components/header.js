@@ -1,14 +1,11 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
-import { COLORS } from '../data/settings'
+import { COLORS } from "../data/settings"
 
-const headerColor = '#ffffff';
+const headerColor = "#ffffff"
 
-const Header = ({
-  siteTitle,
-  siteDesc,
-}) => (
+const Header = ({ siteTitle, siteDesc }) => (
   <header
     style={{
       background: COLORS.green,
@@ -33,9 +30,11 @@ const Header = ({
           {siteTitle}
         </Link>
       </h1>
-      {siteDesc &&
-        <span className="page-subtitle" style={{ color: headerColor }} >{siteDesc}</span>
-      }
+      {siteDesc && (
+        <span className="page-subtitle" style={{ color: headerColor }}>
+          {siteDesc}
+        </span>
+      )}
     </div>
   </header>
 )

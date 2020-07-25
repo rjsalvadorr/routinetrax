@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Routine from '../components/routine';
+import PropTypes from "prop-types"
+import React from "react"
+import Routine from "../components/routine"
 
-import './routine-list.css';
+import "./routine-list.css"
 
-const MAX_HABITS = 9;
+const MAX_HABITS = 9
 
 const buildRoutines = (month, iconMode, actions) => {
-  const habits = [];
+  const habits = []
   for (let i = 0; i < month.habits.length; i++) {
-    const currentHabit = month.habits[i];
-    habits.push (
+    const currentHabit = month.habits[i]
+    habits.push(
       <Routine
         habit={currentHabit}
         number={i + 1}
@@ -18,10 +18,10 @@ const buildRoutines = (month, iconMode, actions) => {
         actions={actions}
         key={currentHabit.id}
       />
-    );
+    )
   }
-  return habits;
-};
+  return habits
+}
 
 const addButton = (month, onAddHabit) => {
   if (month.habits.length < MAX_HABITS) {
@@ -33,10 +33,10 @@ const addButton = (month, onAddHabit) => {
       >
         Add
       </button>
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
 const removeButton = (month, onRemoveHabit) => {
   if (month.habits.length > 1) {
@@ -48,34 +48,34 @@ const removeButton = (month, onRemoveHabit) => {
       >
         Remove
       </button>
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
 const copyLastButton = (month, onCopyLast) => {
-  if (!(month.tags && month.tags.includes('first'))) {
+  if (!(month.tags && month.tags.includes("first"))) {
     return (
       <button
         className="rt-button rt-button--copy"
         onClick={onCopyLast}
         data-table-id={month.id}
-        disabled="true"
+        disabled={true}
       >
         Copy Last
       </button>
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
-const RoutineList = ({month, iconMode, actions}) => (
+const RoutineList = ({ month, iconMode, actions }) => (
   <div className="routine-list">
-    {buildRoutines (month, iconMode, actions)}
+    {buildRoutines(month, iconMode, actions)}
     <div className="routine-list__btn-group">
-      {addButton (month, actions.onAddHabit)}
+      {addButton(month, actions.onAddHabit)}
 
-      {removeButton (month, actions.onRemoveHabit)}
+      {removeButton(month, actions.onRemoveHabit)}
 
       <button
         className="rt-button rt-button--clear"
@@ -85,19 +85,19 @@ const RoutineList = ({month, iconMode, actions}) => (
         Clear
       </button>
 
-      {copyLastButton (month, () => {})}
+      {copyLastButton(month, () => {})}
     </div>
   </div>
-);
+)
 
 RoutineList.propTypes = {
   month: PropTypes.object,
   actions: PropTypes.object,
-};
+}
 
 RoutineList.defaultProps = {
   month: {},
   actions: {},
-};
+}
 
-export default RoutineList;
+export default RoutineList

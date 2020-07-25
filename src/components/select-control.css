@@ -1,7 +1,12 @@
-.rt-control-group {
-  margin-bottom: 0.75em;
-}
-
 .rt-control--select {
   color: #111111;
+}
+
+.rt-control-group--select .label {
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+.rt-control-group--select.disabled {
+  opacity: 0.33;
 }

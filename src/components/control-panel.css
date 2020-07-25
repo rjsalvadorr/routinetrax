@@ -1,0 +1,52 @@
+.control-panel {
+  padding: 1.5em 0;
+}
+
+.control-panel__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.rt-button {
+  border: none;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  height: 40px;
+}
+
+.rt-control-group .rt-button {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.rt-control--checkbox {
+  margin-right: 0.3em;
+}
+
+.rt-control-group--checkbox .rt-control--checkbox,
+.rt-control-group--checkbox .checkbox-label {
+  vertical-align: middle;
+}
+
+/*///////////////////////*/
+
+.rt-control-group {
+  margin: 0.5em 0;
+  position: relative;
+  min-height: 40px;
+}
+
+.rt-control-group.size-1 {
+  flex: 0 1 calc(33% - 1em);
+}
+
+.rt-control-group.size-2 {
+  flex: 0 1 calc(66% - 1em);
+}
+
+.rt-control-group.size-3 {
+  flex: 0 1 100%;
+}
