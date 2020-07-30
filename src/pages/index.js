@@ -229,6 +229,16 @@ class IndexPage extends React.Component {
     return (
       <Layout>
         <SEO title="Home" />
+        <h2>what is routinetrax?</h2>
+        <p>
+          routinetrax is a monthly routine tracking system, using sheets that track up to 9
+          routines over the course of a month. It features a tracking grid, which shows patterns
+          that are easy to notice and reason about. It's like looking at a month's worth of
+          journal entries, but condensed into a grid on a single sheet of paper.
+        </p>
+        <p>
+          For more info, check out the <a href="https://github.com/rjsalvadorr/routinetrax">GitHub page</a>.
+        </p>
         <ControlPanel controls={controls} />
         <MonthLists
           months={this.getRenderedTables()}

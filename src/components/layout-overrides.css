@@ -3,6 +3,10 @@ body {
   color: #ffffff;
 }
 
+p {
+  font-size: 100%;
+}
+
 .main-wrapper {
   font-family: Arial, Helvetica, sans-serif;
 }
