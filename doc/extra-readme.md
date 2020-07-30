@@ -2,7 +2,9 @@
 
 ## why was this created?
 
-When the COVID-19 lockdown upended my entire life and work habits, I found myself really disoriented and disorganized. I was very fortunate not to lose my job, but the WFH lockdown life still presented challenges. The days blurred together, time lost its meaning, then my well-being and productivity took a nosedive. I decided to correct this course by rebuilding my habits. The idea was to ditch the habits that don't work (like doomscrolling and endless introspection), and replace them with helpful ones (like meditation and eating healthier)
+> “If you can't measure it, you can't improve it.”
+
+When the COVID-19 lockdown upended my life and work habits, I found myself really disoriented and disorganized. I was very fortunate not to lose my job, but the WFH lockdown life still presented challenges. The days blurred together, time lost its meaning, then my well-being and productivity took a nosedive. I decided to correct this course by rebuilding my habits. The idea was to ditch the habits that don't work (like doomscrolling and endless introspection), and replace them with helpful ones (like meditation and exercise)
 
 This "routinetrax" system was made to track my progress and keep my routines moving in the right direction.
 
