@@ -8,4 +8,20 @@
 
 .routine-list .rt-button {
   margin-right: 0.6em;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px;
+  vertical-align: bottom;
+}
+
+.routine-list .rt-button--add {
+  background-color: #579676 ;
+  background-image: url("../../static/icons/menu/icon-plus.png");
+  width: 48px;
+}
+
+.routine-list .rt-button--remove {
+  background-color: #df5d4f;
+  background-image: url("../../static/icons/menu/icon-minus.png");
+  width: 48px;
 }

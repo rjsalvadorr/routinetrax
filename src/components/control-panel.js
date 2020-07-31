@@ -42,7 +42,7 @@ const buildControl = ctrl => {
         key={ctrl.id}
       >
         <button
-          className="rt-button rt-button--sheets"
+          className={`rt-button rt-button--${ctrl.name}`}
           onClick={ctrl.handler}
           disabled={isDisabled}
         >

@@ -31,7 +31,6 @@ const addButton = (month, onAddHabit) => {
         onClick={onAddHabit}
         data-table-id={month.id}
       >
-        Add
       </button>
     )
   }
@@ -46,7 +45,6 @@ const removeButton = (month, onRemoveHabit) => {
         onClick={onRemoveHabit}
         data-table-id={month.id}
       >
-        Remove
       </button>
     )
   }
