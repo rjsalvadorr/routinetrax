@@ -2,7 +2,7 @@ import React from "react"
 import { DateTime } from "luxon"
 import { v4 as uuidv4 } from "uuid"
 
-import { getNewHabit } from "../utils/random-utils"
+import { getNewRoutine } from "../utils/random-utils"
 import { computeInitialTables, transformTables } from "../utils/table-utils"
 import { generatePdf } from "../utils/pdf-utils"
 import Layout from "../components/layout"
@@ -70,7 +70,7 @@ class IndexPage extends React.Component {
 
     const transform = tbl => {
       if (tbl.id === targetId) {
-        tbl.habits.push(getNewHabit())
+        tbl.habits.push(getNewRoutine())
       }
       return tbl
     }
@@ -101,7 +101,7 @@ class IndexPage extends React.Component {
     const transform = tbl => {
       if (tbl.id === targetId) {
         tbl.habits = []
-        tbl.habits.push(getNewHabit())
+        tbl.habits.push(getNewRoutine())
       }
       return tbl
     }
