@@ -27,7 +27,7 @@ const DEFAULT_INCL_CURRENT_MTH = true;
 const COLORS = {
   darkGrey: '#3c4245',
   grey: '#6f7678',
-  green: '#658283',
+  green: '#658375',
   pastel: '#dfcdc3',
 };
 
