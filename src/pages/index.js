@@ -2,7 +2,7 @@ import React from "react"
 import { DateTime } from "luxon"
 import { v4 as uuidv4 } from "uuid"
 
-import { getNewHabit } from "../utils/random-utils"
+import { getNewRoutine } from "../utils/random-utils"
 import { computeInitialTables, transformTables } from "../utils/table-utils"
 import { generatePdf } from "../utils/pdf-utils"
 import Layout from "../components/layout"
@@ -70,7 +70,7 @@ class IndexPage extends React.Component {
 
     const transform = tbl => {
       if (tbl.id === targetId) {
-        tbl.habits.push(getNewHabit())
+        tbl.habits.push(getNewRoutine())
       }
       return tbl
     }
@@ -101,7 +101,7 @@ class IndexPage extends React.Component {
     const transform = tbl => {
       if (tbl.id === targetId) {
         tbl.habits = []
-        tbl.habits.push(getNewHabit())
+        tbl.habits.push(getNewRoutine())
       }
       return tbl
     }
@@ -229,16 +229,39 @@ class IndexPage extends React.Component {
     return (
       <Layout>
         <SEO title="Home" />
-        <h2>what is routinetrax?</h2>
-        <p>
-          routinetrax is a monthly routine tracking system, using sheets that track up to 9
-          routines over the course of a month. It features a tracking grid, which shows patterns
-          that are easy to notice and reason about. It's like looking at a month's worth of
-          journal entries, but condensed into a grid on a single sheet of paper.
-        </p>
-        <p>
-          For more info, check out the <a href="https://github.com/rjsalvadorr/routinetrax">GitHub page</a>.
-        </p>
+        <div className="intro">
+          <div className="intro-img__wrapper">
+            <img className="intro-img" src={"/example.jpg"} alt="example" />
+          </div>
+          <div className="intro-text__wrapper">
+            <h2>what is routinetrax?</h2>
+            <p className="intro-text">
+              routinetrax is a monthly routine tracking system. It lets users
+              track several routines over the course of a month through printed
+              sheets. The sheets feature a tracking grid, which shows patterns
+              that are easy to notice and reason about.
+            </p>
+            <p className="intro-text">
+              TL;DR --- This system fits a month's worth of journal entries into
+              one sheet of paper, and gives insight into a person's routines
+              over time.
+            </p>
+            <h2>who is this for?</h2>
+            <p className="intro-text">
+              If you can describe yourself as "obsessive", "A-type", or a
+              "self-improvement fanatic", you might find this useful. Or if you
+              want to get the benefits of a journal, but focused entirely on the
+              actions you take.{" "}
+            </p>
+            <p>
+              For more info, check out the{" "}
+              <a href="https://github.com/rjsalvadorr/routinetrax">
+                GitHub page
+              </a>
+              .
+            </p>
+          </div>
+        </div>
         <ControlPanel controls={controls} />
         <MonthLists
           months={this.getRenderedTables()}

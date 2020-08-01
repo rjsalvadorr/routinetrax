@@ -30,9 +30,7 @@ const addButton = (month, onAddHabit) => {
         className="rt-button rt-button--add"
         onClick={onAddHabit}
         data-table-id={month.id}
-      >
-        Add
-      </button>
+      ></button>
     )
   }
   return null
@@ -45,9 +43,7 @@ const removeButton = (month, onRemoveHabit) => {
         className="rt-button rt-button--remove"
         onClick={onRemoveHabit}
         data-table-id={month.id}
-      >
-        Remove
-      </button>
+      ></button>
     )
   }
   return null

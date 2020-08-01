@@ -22,6 +22,15 @@
   bottom: 0;
 }
 
+.rt-control-group .rt-button--generate-pdf {
+  background-color: #579676 ;
+}
+
+.rt-control-group .rt-button--clear {
+  opacity: 0.4;
+  background-color: #df5d4f;
+}
+
 .rt-control--checkbox {
   margin-right: 0.3em;
 }

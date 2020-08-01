@@ -16,6 +16,7 @@ const HIGHLIGHT_COLOUR = "#eeeeee"
 const WEEKEND_HIGHLIGHT_COLOUR = "#cccccc"
 const TEXT_COLOUR = "#000000"
 const LINE_COLOUR = "#000000"
+const LINE_WIDTH = 0.4
 
 const getHabitRows = (habits, iconMode) => {
   if (iconMode) {
@@ -52,10 +53,17 @@ const isNumber = cellText => {
   return Number.isInteger(int)
 }
 
+const baseStyle = {
+  lineColor: LINE_COLOUR,
+  textColor: TEXT_COLOUR,
+  lineWidth: LINE_WIDTH,
+}
+
 const headStyle = {
   halign: "center",
   fillColor: HIGHLIGHT_COLOUR,
-  lineWidth: 0.25,
+  lineWidth: LINE_WIDTH,
+  lineColor: LINE_COLOUR,
 }
 
 const habitsColumnStyle = {
@@ -165,10 +173,9 @@ const generatePdf = (tables, iconMode) => {
       headStyles: headStyle,
       columnStyles: habitsColumnStyle,
       styles: {
+        ...baseStyle,
         fontSize: HABITS_FONT_SIZE,
         cellPadding: 5,
-        lineColor: LINE_COLOUR,
-        textColor: TEXT_COLOUR,
       },
       startY: TABLE_START_Y,
       willDrawCell: willDrawHabitsTableCell,
@@ -186,10 +193,9 @@ const generatePdf = (tables, iconMode) => {
       headStyles: headStyle,
       columnStyles: trackingColumnStyle,
       styles: {
+        ...baseStyle,
         fontSize: TRACKING_FONT_SIZE,
         cellPadding: 1.25,
-        lineColor: LINE_COLOUR,
-        textColor: TEXT_COLOUR,
       },
       startY: TABLE_START_Y,
       didParseCell: didParseTrackingTableCell,
