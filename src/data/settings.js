@@ -16,9 +16,10 @@ const MONTH_OPTIONS = [
   {value: 10, label: '10'},
   {value: 11, label: '11'},
   {value: 12, label: '12'},
+  {value: 36, label: '36'},
 ];
 const DEFAULT_MONTHS = MONTH_OPTIONS[1];
-const MAX_MONTHS = MONTH_OPTIONS[11].value;
+const MAX_MONTHS = MONTH_OPTIONS[MONTH_OPTIONS.length - 1].value;
 
 const NUM_DEFAULT_HABITS = 5;
 const DEFAULT_ICON_MODE = false;
