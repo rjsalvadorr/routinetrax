@@ -245,7 +245,10 @@ class IndexPage extends React.Component {
             </p>
             <h2>who is this for?</h2>
             <p className="intro-text">
-              If you can describe yourself as "obsessive", "A-type", or a "self-improvement fanatic", you might find this useful. Or if you want to get some of the benefits of a journal, but focused entirely on the actions you take.
+              If you can describe yourself as "obsessive", "A-type", or a
+              "self-improvement fanatic", you might find this useful. Or if you
+              want to get some of the benefits of a journal, but focused
+              entirely on the actions you take.
             </p>
             <p>
               For more info, check out the{" "}
