@@ -161,7 +161,6 @@ class IndexPage extends React.Component {
         secondEl.tags.splice(idx, 1)
       }
     }
-    console.log(freshTables)
     return freshTables
   }
 

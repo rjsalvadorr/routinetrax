@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { v4 as uuidv4 } from "uuid"
 import foodIcons from "../data/icons/food-icons"
-import { HABIT_PROMPTS_LONG, DEFAULT_NEW_HABITS } from "../data/settings"
+import { HABIT_PROMPTS, DEFAULT_NEW_HABITS } from "../data/settings"
 
 const getNewRoutine = () => {
   return {
@@ -13,7 +13,7 @@ const getNewRoutine = () => {
 
 const getInitialRoutines = numHabits => {
   const habs = []
-  const shuffledHabs = _.shuffle(HABIT_PROMPTS_LONG)
+  const shuffledHabs = _.shuffle(HABIT_PROMPTS)
   const shuffledIcons = _.shuffle(foodIcons)
   for (let i = 0; i < numHabits; i++) {
     habs.push({

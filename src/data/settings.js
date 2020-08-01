@@ -58,7 +58,6 @@ const HABIT_PROMPTS_SHORT = [
   "Drink a burger",
   "Become a harmonious banana",
   "Separate squirrels from squid",
-  "Shout with happiness",
   "Make it funky",
   "Scream inside your heart",
   "Take it easy",
@@ -78,6 +77,8 @@ const HABIT_PROMPTS_LONG = [
   "Misplace my mind in a maze of maize",
 ]
 
+const HABIT_PROMPTS = HABIT_PROMPTS_SHORT
+
 export {
   PAPER_OPTIONS,
   MONTH_OPTIONS,
@@ -88,6 +89,5 @@ export {
   DEFAULT_INCL_CURRENT_MTH,
   COLORS,
   DEFAULT_NEW_HABITS,
-  HABIT_PROMPTS_SHORT,
-  HABIT_PROMPTS_LONG,
+  HABIT_PROMPTS,
 }
