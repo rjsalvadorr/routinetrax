@@ -33,7 +33,7 @@ const addButton = (month, onAddHabit) => {
       ></button>
     )
   }
-  return null
+  return <button className="rt-button rt-button--dummy"></button>
 }
 
 const removeButton = (month, onRemoveHabit) => {
@@ -46,7 +46,7 @@ const removeButton = (month, onRemoveHabit) => {
       ></button>
     )
   }
-  return null
+  return <button className="rt-button rt-button--dummy"></button>
 }
 
 const copyLastButton = (month, onCopyLast) => {

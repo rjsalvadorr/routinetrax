@@ -12,12 +12,18 @@
   background-position: center;
   background-size: 24px;
   vertical-align: bottom;
+  opacity: 1;
 }
 
 .routine-list .rt-button--add {
   background-color: #579676 ;
   background-image: url("../../static/icons/menu/icon-plus.png");
   width: 48px;
+}
+
+.routine-list .rt-button--dummy {
+  width: 48px;
+  opacity: 0;
 }
 
 .routine-list .rt-button--remove {

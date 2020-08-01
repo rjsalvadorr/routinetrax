@@ -145,7 +145,24 @@ class IndexPage extends React.Component {
     const sliceEnd = this.state.includeCurrentMonth
       ? this.state.months.value
       : this.state.months.value + 1
-    return this.state.tables.slice(sliceStart, sliceEnd)
+
+    const freshTables = this.state.tables.slice(sliceStart, sliceEnd)
+    const firstEl = freshTables[0]
+    const secondEl = freshTables[1]
+    const tag = "first"
+
+    if (firstEl && firstEl.tags && !firstEl.tags.includes(tag)) {
+      firstEl.tags.push(tag)
+    }
+
+    if (secondEl && secondEl.tags && secondEl.tags.includes(tag)) {
+      const idx = secondEl.tags.indexOf(tag)
+      if (idx > -1) {
+        secondEl.tags.splice(idx, 1)
+      }
+    }
+    console.log(freshTables)
+    return freshTables
   }
 
   render() {

@@ -27,6 +27,7 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
+    "http-server": "^0.12.3",
     "prettier": "2.0.5"
   },
   "keywords": [
@@ -35,6 +36,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "build-serve": "gatsby build && http-server public",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
