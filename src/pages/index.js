@@ -44,7 +44,7 @@ class IndexPage extends React.Component {
     this.handleRoutineTextChange = this.handleRoutineTextChange.bind(this)
 
     this.getPdfDocument = this.getPdfDocument.bind(this)
-    // console.log(this.state)
+    // console.log('initial state', this.state)
   }
 
   handlePaperType(uiPaperType) {
@@ -65,9 +65,7 @@ class IndexPage extends React.Component {
     })
   }
 
-  handleAddRoutine(evt) {
-    const targetId = evt.target.dataset.tableId
-
+  handleAddRoutine(targetId) {
     const transform = tbl => {
       if (tbl.id === targetId) {
         tbl.habits.push(getNewRoutine())
@@ -80,9 +78,7 @@ class IndexPage extends React.Component {
     })
   }
 
-  handleRemoveRoutine(evt) {
-    const targetId = evt.target.dataset.tableId
-
+  handleRemoveRoutine(targetId) {
     const transform = tbl => {
       if (tbl.id === targetId) {
         tbl.habits.pop()
@@ -95,9 +91,7 @@ class IndexPage extends React.Component {
     })
   }
 
-  handleClearRoutines(evt) {
-    const targetId = evt.target.dataset.tableId
-
+  handleClearRoutines(targetId) {
     const transform = tbl => {
       if (tbl.id === targetId) {
         tbl.habits = []
@@ -111,8 +105,7 @@ class IndexPage extends React.Component {
     })
   }
 
-  handleRoutineTextChange(evt) {
-    const targetId = evt.target.dataset.habitId
+  handleRoutineTextChange(targetId, evt) {
     const targetValue = evt.target.value
 
     const transform = tbl => {
@@ -161,6 +154,7 @@ class IndexPage extends React.Component {
         secondEl.tags.splice(idx, 1)
       }
     }
+
     return freshTables
   }
 

@@ -28,8 +28,7 @@ const addButton = (month, onAddHabit) => {
     return (
       <button
         className="rt-button rt-button--add"
-        onClick={onAddHabit}
-        data-table-id={month.id}
+        onClick={() => onAddHabit(month.id)}
       ></button>
     )
   }
@@ -41,8 +40,7 @@ const removeButton = (month, onRemoveHabit) => {
     return (
       <button
         className="rt-button rt-button--remove"
-        onClick={onRemoveHabit}
-        data-table-id={month.id}
+        onClick={() => onRemoveHabit(month.id)}
       ></button>
     )
   }
@@ -54,8 +52,7 @@ const copyLastButton = (month, onCopyLast) => {
     return (
       <button
         className="rt-button rt-button--copy"
-        onClick={onCopyLast}
-        data-table-id={month.id}
+        onClick={() => onCopyLast(month.id)}
         disabled={true}
       >
         Copy Last
@@ -75,8 +72,7 @@ const RoutineList = ({ month, iconMode, actions }) => (
 
       <button
         className="rt-button rt-button--clear"
-        onClick={actions.onClearHabits}
-        data-table-id={month.id}
+        onClick={() => actions.onClearHabits(month.id)}
       >
         Clear
       </button>

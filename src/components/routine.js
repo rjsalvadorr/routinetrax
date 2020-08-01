@@ -26,7 +26,7 @@ const Routine = ({ habit, number, iconMode, actions }) => {
         className="routine__desc"
         name="routine__desc"
         defaultValue={habit.description}
-        onChange={actions.onDescChanged}
+        onChange={e => actions.onDescChanged(habit.id, e)}
         required
         maxLength="40"
         data-habit-id={habit.id}

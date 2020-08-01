@@ -1,5 +1,4 @@
 import { DateTime } from "luxon"
-// import {v4 as uuidv4} from 'uuid';
 import { getInitialRoutines } from "./random-utils"
 import { MAX_MONTHS, NUM_DEFAULT_HABITS } from "../data/settings"
 import MonthSheet from "../models/month-sheet"
@@ -27,7 +26,6 @@ const computeInitialTables = startMonthObj => {
 
   tables.push(
     new MonthSheet(
-      null,
       start.year,
       start.monthLong,
       computeMonthRows(start),
@@ -40,7 +38,6 @@ const computeInitialTables = startMonthObj => {
     const currentDt = start.plus({ months: offset })
     tables.push(
       new MonthSheet(
-        null,
         currentDt.year,
         currentDt.monthLong,
         computeMonthRows(currentDt),
@@ -55,14 +52,15 @@ const computeInitialTables = startMonthObj => {
 const transformTables = (tables, transform) => {
   // find and change the given habit
   const tablesCopy = tables.map(tbl => {
-    let newTbl = new MonthSheet(
-      tbl.id,
-      tbl.year,
-      tbl.month,
-      tbl.rows,
-      tbl.habits,
-      tbl.tags
-    )
+    let newTbl = {
+      id: tbl.id,
+      year: tbl.year,
+      month: tbl.month,
+      label: tbl.label,
+      rows: tbl.rows,
+      habits: tbl.habits,
+      tags: tbl.tags,
+    }
     return transform(newTbl)
   })
   return tablesCopy
