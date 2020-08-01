@@ -14,7 +14,7 @@ Looking at the tracking grid, we can easily compare activity over certain time p
 
 We can also look at how consistency across routines. Here, we can see that routine #1 happened pretty consistently throughout the month. Whereas routine #4 only got some attention during certain weeks.
 
-![routinetrax sheet example (columns)](doc/example-col.jpg "routinetrax sheet example (columns)")
+![routinetrax sheet example (columns)](doc/example-columns.jpg "routinetrax sheet example (columns)")
 
 ## who is this for?
 
