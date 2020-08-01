@@ -44,7 +44,7 @@ class IndexPage extends React.Component {
     this.handleRoutineTextChange = this.handleRoutineTextChange.bind(this)
 
     this.getPdfDocument = this.getPdfDocument.bind(this)
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   handlePaperType(uiPaperType) {
