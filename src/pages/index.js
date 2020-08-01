@@ -234,6 +234,7 @@ class IndexPage extends React.Component {
             <img className="intro-img" src={"/example.jpg"} alt="example" />
           </div>
           <div className="intro-text__wrapper">
+            <h2>what is this?</h2>
             <p className="intro-text">
               routinetrax is a monthly routine tracking system, using sheets
               that track up to 9 routines over the course of a month. It
@@ -241,6 +242,10 @@ class IndexPage extends React.Component {
               notice and reason about. It's like looking at a month's worth of
               journal entries, but condensed into a grid on a single sheet of
               paper.
+            </p>
+            <h2>who is this for?</h2>
+            <p className="intro-text">
+              If you can describe yourself as "obsessive", "A-type", or a "self-improvement fanatic", you might find this useful. Or if you want to get some of the benefits of a journal, but focused entirely on the actions you take.
             </p>
             <p>
               For more info, check out the{" "}
