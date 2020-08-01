@@ -8,7 +8,7 @@ For example, let's take a look at this prototype sheet:
 
 ![routinetrax sheet example](doc/example.jpg "routinetrax sheet example")
 
-Looking at the tracking grid, we can easily compare activity over certain time periods. A lot of stuff happened on June 9 to 11, but the data's a bit more sparse around the 14th to 16th. Maybe this person didn't have the energy to do everything, or was focusing exclusively on the accomplished tasks. 
+Looking at the tracking grid, we can easily compare activity over certain time periods. A lot of stuff happened on June 9 to 11, but the data's a bit more sparse around the 14th to 16th. Maybe this person didn't have the energy to do everything, or was focusing exclusively on the accomplished tasks.
 
 ![routinetrax sheet example (rows)](doc/example-rows.jpg "routinetrax sheet example (rows)")
 

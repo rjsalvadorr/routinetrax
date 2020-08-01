@@ -16,6 +16,6 @@ I found it easy to memorize the 9 habits after a week, and it forced me to prior
 
 I'm primarily interested in routines that take place in the real world, and paper exists IRL. In addition, I feel it's got some more advantages:
 
-+ paper cannot be turned off, and may be harder to ignore when it's visible (my tracking sheet is always on my desk or music stand)
-+ the tactile feeling of marking marking something "done" might reinforce the feeling of accomplishment
-+ we have enough f***ing digital screens to deal with in 2020. Do you really want more of that? Because I don't. As a software dev that stares at screens for 8 hours every workday (plus several more hours for fun), I want to give my eyes a rest. So I chose to do all this stuff on dead trees.
+- paper cannot be turned off, and may be harder to ignore when it's visible (my tracking sheet is always on my desk or music stand)
+- the tactile feeling of marking marking something "done" might reinforce the feeling of accomplishment
+- we have enough f\*\*\*ing digital screens to deal with in 2020. Do you really want more of that? Because I don't. As a software dev that stares at screens for 8 hours every workday (plus several more hours for fun), I want to give my eyes a rest. So I chose to do all this stuff on dead trees.
